@@ -3,153 +3,403 @@
 {% block title %}Home - Digital Business Card{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <!-- Hero Section -->
-    <div class="row align-items-center mb-5">
-        <div class="col-lg-6" data-aos="fade-right">
-            <h1 class="display-4 fw-bold mb-4">Create Your Digital Business Card</h1>
-            <p class="lead mb-4">Share your professional identity with a modern, interactive digital business card that stands out.</p>
-            <div class="d-flex gap-3 mb-5">
-                {% if user.is_authenticated %}
-                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
-                {% else %}
-                <a href="{% url 'login' %}" class="btn btn-primary btn-lg"><i class="fas fa-sign-in-alt me-2"></i> Get Started</a>
-                {% endif %}
-                <a href="#how-it-works" class="btn btn-outline-secondary btn-lg"><i class="fas fa-info-circle me-2"></i> Learn More</a>
+<!-- Hero Section -->
+<section class="hero-section py-5 mb-0">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h1 class="display-4 fw-bold mb-4">Your Digital Identity in One Card</h1>
+                <p class="lead mb-4">Create a stunning digital business card that stands out. Share your professional profile instantly with anyone, anywhere.</p>
+                <div class="d-flex gap-3 mb-5">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg"><i class="fas fa-sign-in-alt me-2"></i> Get Started</a>
+                    {% endif %}
+                    <a href="#how-it-works" class="btn btn-outline-secondary btn-lg"><i class="fas fa-info-circle me-2"></i> Learn More</a>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-6" data-aos="fade-left">
-            <div class="position-relative floating-element">
-                <div class="position-absolute top-0 start-0 translate-middle bg-primary rounded-circle" style="width: 100px; height: 100px; opacity: 0.5; z-index: -1;"></div>
-                <div class="position-absolute bottom-0 end-0 translate-middle bg-secondary rounded-circle" style="width: 150px; height: 150px; opacity: 0.3; z-index: -1;"></div>
-                <div class="business-card mx-auto shadow">
-                    <div class="text-center">
-                        <div class="profile-img bg-primary d-flex align-items-center justify-content-center mx-auto mb-3">
-                            <span class="text-white display-6">J</span>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="position-relative floating-element">
+                    <div class="position-absolute top-0 start-0 translate-middle bg-primary rounded-circle" style="width: 100px; height: 100px; opacity: 0.5; z-index: -1;"></div>
+                    <div class="position-absolute bottom-0 end-0 translate-middle bg-secondary rounded-circle" style="width: 150px; height: 150px; opacity: 0.3; z-index: -1;"></div>
+                    <div class="business-card mx-auto shadow">
+                        <div class="text-center">
+                            <div class="profile-img bg-primary d-flex align-items-center justify-content-center mx-auto mb-3">
+                                <span class="text-white display-6">J</span>
+                            </div>
+                            <h3 class="fw-bold">John Doe</h3>
+                            <p class="text-muted">Marketing Director</p>
+                            <p class="company-name">Acme Inc.</p>
+                            <div class="social-links mt-3">
+                                <a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                            </div>
                         </div>
-                        <h3 class="fw-bold">John Doe</h3>
-                        <p class="text-muted">Marketing Director</p>
-                        <p class="company-name">Acme Inc.</p>
-                        <div class="social-links mt-3">
-                            <a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Features Section -->
-    <div class="row my-5 pt-5" id="features">
-        <div class="col-12 text-center mb-5" data-aos="fade-up">
-            <h2 class="display-5 fw-bold mb-3">Why Choose Digital Business Cards?</h2>
-            <p class="lead w-75 mx-auto">Say goodbye to traditional paper cards and hello to the future of networking.</p>
-        </div>
-        
-        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-leaf"></i>
-                </div>
-                <h3 class="h4 fw-bold">Eco-Friendly</h3>
-                <p>Go green with paperless digital cards that help reduce your carbon footprint.</p>
-            </div>
-        </div>
-        
-        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3 class="h4 fw-bold">Analytics</h3>
-                <p>Track views and shares to understand how your card is performing.</p>
-            </div>
-        </div>
-        
-        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-sync-alt"></i>
-                </div>
-                <h3 class="h4 fw-bold">Always Updated</h3>
-                <p>Update your information anytime, no need to reprint new cards.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- How It Works Section -->
-    <div class="row my-5 py-5" id="how-it-works">
-        <div class="col-12 text-center mb-5" data-aos="fade-up">
-            <h2 class="display-5 fw-bold mb-3">How It Works</h2>
-            <p class="lead w-75 mx-auto">Three simple steps to create and share your digital business card.</p>
-        </div>
-        
-        <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="card h-100 border-0">
-                <div class="card-body text-center">
-                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
-                        <h3 class="fw-bold text-primary mb-0">1</h3>
-                    </div>
-                    <h4 class="card-title">Create</h4>
-                    <p class="card-text">Set up your digital business card with all your contact information and social media profiles.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="card h-100 border-0">
-                <div class="card-body text-center">
-                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
-                        <h3 class="fw-bold text-primary mb-0">2</h3>
-                    </div>
-                    <h4 class="card-title">Share</h4>
-                    <p class="card-text">Share your digital business card with a unique URL or QR code that's easy to scan.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="card h-100 border-0">
-                <div class="card-body text-center">
-                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
-                        <h3 class="fw-bold text-primary mb-0">3</h3>
-                    </div>
-                    <h4 class="card-title">Track</h4>
-                    <p class="card-text">Monitor your card's performance with detailed analytics on views and shares.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Section -->
-    <div class="row my-5 py-5">
-        <div class="col-12">
-            <div class="card border-0 bg-primary text-white" data-aos="fade-up">
-                <div class="card-body p-5 text-center">
-                    <h2 class="display-6 fw-bold mb-4">Ready to Create Your Digital Business Card?</h2>
-                    <p class="lead mb-4">Join thousands of professionals who have already switched to digital business cards.</p>
-                    <div class="d-flex justify-content-center gap-3">
-                        {% if user.is_authenticated %}
-                        <a href="{% url 'dashboard' %}" class="btn btn-light btn-lg text-primary"><i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard</a>
-                        {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-light btn-lg text-primary"><i class="fas fa-sign-in-alt me-2"></i> Get Started</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- Features Section with Wave Divider -->
+<div class="wave-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
+        <path fill="#f8f9fa" fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
+    </svg>
 </div>
+
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">Why Choose Digital Business Cards?</h2>
+                <p class="lead w-75 mx-auto">Say goodbye to traditional paper cards and hello to the future of networking.</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card h-100 p-4 rounded shadow-sm">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-leaf fa-2x text-primary"></i>
+                    </div>
+                    <h3 class="h4 fw-bold">Eco-Friendly</h3>
+                    <p class="mb-0">Go green with paperless digital cards that help reduce your carbon footprint while making a modern impression.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card h-100 p-4 rounded shadow-sm">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-chart-line fa-2x text-primary"></i>
+                    </div>
+                    <h3 class="h4 fw-bold">Analytics</h3>
+                    <p class="mb-0">Track views and shares to understand how your card is performing and optimize your networking strategy.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card h-100 p-4 rounded shadow-sm">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-sync-alt fa-2x text-primary"></i>
+                    </div>
+                    <h3 class="h4 fw-bold">Always Updated</h3>
+                    <p class="mb-0">Update your information anytime, no need to reprint new cards. Your contacts always see your latest details.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works-section py-5" id="how-it-works">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">How It Works</h2>
+                <p class="lead w-75 mx-auto">Three simple steps to create and share your digital business card.</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <h3 class="fw-bold text-primary mb-0">1</h3>
+                        </div>
+                        <h4 class="card-title">Create</h4>
+                        <p class="card-text">Set up your digital business card with all your contact information and social media profiles.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <h3 class="fw-bold text-primary mb-0">2</h3>
+                        </div>
+                        <h4 class="card-title">Share</h4>
+                        <p class="card-text">Share your digital business card with a unique URL or QR code that's easy to scan.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <h3 class="fw-bold text-primary mb-0">3</h3>
+                        </div>
+                        <h4 class="card-title">Track</h4>
+                        <p class="card-text">Monitor your card's performance with detailed analytics on views and shares.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="contact-form-section py-5 bg-light" id="contact">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">Get Your Digital Business Card</h2>
+                <p class="lead w-75 mx-auto">Fill out the form below and we'll help you create your perfect digital business card.</p>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <form method="post">
+                            {% csrf_token %}
+                            
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+                                        {{ form.name }}
+                                        {% if form.name.errors %}
+                                            <div class="invalid-feedback d-block">{{ form.name.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                                        {{ form.email }}
+                                        {% if form.email.errors %}
+                                            <div class="invalid-feedback d-block">{{ form.email.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="{{ form.phone.id_for_label }}" class="form-label">Phone Number</label>
+                                        {{ form.phone }}
+                                        {% if form.phone.errors %}
+                                            <div class="invalid-feedback d-block">{{ form.phone.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="{{ form.company_name.id_for_label }}" class="form-label">Company Name</label>
+                                        {{ form.company_name }}
+                                        {% if form.company_name.errors %}
+                                            <div class="invalid-feedback d-block">{{ form.company_name.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb-3">
+                                        <label for="{{ form.message.id_for_label }}" class="form-label">Message</label>
+                                        {{ form.message }}
+                                        {% if form.message.errors %}
+                                            <div class="invalid-feedback d-block">{{ form.message.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb-4">
+                                        <label class="form-label">{{ form.card_type.label }}</label>
+                                        <div class="d-flex gap-4">
+                                            {% for radio in form.card_type %}
+                                                <div class="form-check">
+                                                    {{ radio.tag }}
+                                                    <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                                        {{ radio.choice_label }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        {% if form.card_type.errors %}
+                                            <div class="invalid-feedback d-block">{{ form.card_type.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100">Submit Request</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 bg-primary text-white" data-aos="fade-up">
+                    <div class="card-body p-5 text-center">
+                        <h2 class="display-6 fw-bold mb-4">Ready to Create Your Digital Business Card?</h2>
+                        <p class="lead mb-4">Join thousands of professionals who have already switched to digital business cards.</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'dashboard' %}" class="btn btn-light btn-lg text-primary"><i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard</a>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-light btn-lg text-primary"><i class="fas fa-sign-in-alt me-2"></i> Get Started</a>
+                            {% endif %}
+                            <a href="#contact" class="btn btn-outline-light btn-lg"><i class="fas fa-envelope me-2"></i> Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero section styles */
+    .hero-section {
+        position: relative;
+        overflow: hidden;
+        padding: 6rem 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,242,247,0.9) 100%);
+    }
+    
+    /* Business card preview */
+    .business-card {
+        width: 320px;
+        height: 500px;
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .business-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+    
+    .profile-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+    }
+    
+    .company-name {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 15px;
+    }
+    
+    .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #f8f9fa;
+        color: #495057;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+        background-color: #007bff;
+        color: white;
+        transform: translateY(-3px);
+    }
+    
+    /* Wave divider */
+    .wave-divider {
+        position: relative;
+        height: 100px;
+        margin-top: -100px;
+    }
+    
+    /* Feature cards */
+    .feature-card {
+        background: white;
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .feature-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: rgba(0,123,255,0.1);
+        color: #007bff;
+    }
+    
+    /* Floating animation */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    .floating-element {
+        animation: float 6s ease-in-out infinite;
+    }
+</style>
 {% endblock %}
 
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Add floating animation
-        addFloatingAnimation();
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     });
 </script>
 {% endblock %}

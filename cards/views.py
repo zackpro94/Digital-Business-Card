@@ -3,8 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Sum, Count
 from django.http import JsonResponse
-from .models import Company, Employee, IndividualClient, BusinessCard
+from .models import Company, Employee, IndividualClient, BusinessCard, ContactRequest
 from django.forms import ModelForm, TextInput, EmailInput, URLInput, FileInput, Textarea, Select
+from .forms import ContactRequestForm
 
 
 # Create your views here.
@@ -72,8 +73,20 @@ class BusinessCardForm(ModelForm):
 
 # Public views
 def home(request):
-    """Home page view."""
-    return render(request, 'cards/home.html')
+    """Home page view with contact form."""
+    if request.method == 'POST':
+        form = ContactRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Thank you for your interest! We will contact you shortly.')
+            return redirect('home')
+    else:
+        form = ContactRequestForm()
+    
+    context = {
+        'form': form
+    }
+    return render(request, 'cards/home.html', context)
 
 
 def card_detail(request, uuid):
