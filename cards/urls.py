@@ -23,4 +23,6 @@ urlpatterns = [
     path('dashboard/cards/<int:pk>/edit/', views.card_edit, name='card_edit'),
     path('dashboard/cards/<int:pk>/delete/', views.card_delete, name='card_delete'),
     path('dashboard/analytics/', views.analytics, name='analytics'),
+    path('dashboard/contact-requests/', views.contact_request_list, name='contact_request_list'),
+    path('dashboard/contact-requests/<int:pk>/update-status/', views.contact_request_update_status, name='contact_request_update_status'),
 ]

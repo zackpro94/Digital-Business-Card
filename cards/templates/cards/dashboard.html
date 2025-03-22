@@ -395,6 +395,12 @@
                     <span>Analytics</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_page == 'contact_requests' %}active{% endif %}" href="{% url 'contact_request_list' %}">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact Requests</span>
+                </a>
+            </li>
             <li class="nav-item mt-4">
                 <a class="nav-link" href="{% url 'card_create' %}">
                     <i class="fas fa-plus"></i>

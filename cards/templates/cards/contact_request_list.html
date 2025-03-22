@@ -1,0 +1,447 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}Contact Requests - Digital Business Card{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-wrapper {
+        display: flex;
+        min-height: calc(100vh - 70px);
+    }
+    
+    .dashboard-sidebar {
+        width: 280px;
+        background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
+        color: white;
+        padding: 2rem 1.5rem;
+        position: sticky;
+        top: 70px;
+        height: calc(100vh - 70px);
+        transition: all 0.3s;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+    }
+    
+    .dashboard-sidebar .nav-link {
+        color: rgba(255, 255, 255, 0.8) !important;
+        padding: 0.8rem 1rem;
+        border-radius: 10px;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+    }
+    
+    .dashboard-sidebar .nav-link:hover,
+    .dashboard-sidebar .nav-link.active {
+        background: rgba(255, 255, 255, 0.15);
+        color: white !important;
+        transform: translateX(5px);
+    }
+    
+    .dashboard-sidebar .nav-link i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+    }
+    
+    .dashboard-content {
+        flex: 1;
+        padding: 2rem;
+        background-color: #f8f9fc;
+    }
+    
+    .table-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+    
+    .table-card .card-header {
+        background: white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 1.25rem 1.5rem;
+    }
+    
+    .table-card .card-title {
+        font-weight: 600;
+        margin: 0;
+        font-size: 1.1rem;
+    }
+    
+    .table-card table {
+        margin-bottom: 0;
+    }
+    
+    .table-card th {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        color: #6c757d;
+        padding: 1rem 1.5rem;
+        border-top: none;
+    }
+    
+    .table-card td {
+        padding: 1rem 1.5rem;
+        vertical-align: middle;
+    }
+    
+    .table-card tbody tr {
+        transition: all 0.2s;
+    }
+    
+    .table-card tbody tr:hover {
+        background-color: rgba(67, 97, 238, 0.03);
+    }
+    
+    .badge {
+        padding: 0.5em 0.75em;
+        font-weight: 500;
+        font-size: 0.75rem;
+        border-radius: 6px;
+    }
+    
+    .badge-soft-success {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+    }
+    
+    .badge-soft-warning {
+        background-color: rgba(255, 193, 7, 0.1);
+        color: #ffc107;
+    }
+    
+    .badge-soft-danger {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+    }
+    
+    .badge-soft-info {
+        background-color: rgba(23, 162, 184, 0.1);
+        color: #17a2b8;
+    }
+    
+    .dropdown-menu {
+        border: none;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 0.5rem;
+    }
+    
+    .dropdown-item {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s;
+    }
+    
+    .dropdown-item:hover {
+        background-color: rgba(67, 97, 238, 0.05);
+    }
+    
+    .dropdown-item i {
+        width: 20px;
+        margin-right: 8px;
+        text-align: center;
+    }
+    
+    .btn-icon {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+    }
+    
+    .message-preview {
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .status-dropdown .dropdown-item {
+        display: flex;
+        align-items: center;
+    }
+    
+    .status-dropdown .dropdown-item .status-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+    
+    .status-dropdown .dropdown-item.pending .status-indicator {
+        background-color: #ffc107;
+    }
+    
+    .status-dropdown .dropdown-item.in-progress .status-indicator {
+        background-color: #17a2b8;
+    }
+    
+    .status-dropdown .dropdown-item.completed .status-indicator {
+        background-color: #28a745;
+    }
+    
+    .status-dropdown .dropdown-item.rejected .status-indicator {
+        background-color: #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Toast for notifications -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="fas fa-check-circle text-success me-2"></i>
+            <strong class="me-auto" id="toastTitle">Success</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toastMessage"></div>
+    </div>
+</div>
+
+<div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <div class="dashboard-sidebar">
+        <div class="sidebar-header mb-4 d-flex align-items-center">
+            <i class="fas fa-id-card me-2"></i>
+            <span class="fw-bold">Digital Cards</span>
+        </div>
+        
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard' %}">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'card_list' %}">
+                    <i class="fas fa-id-card"></i>
+                    <span>Business Cards</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'company_list' %}">
+                    <i class="fas fa-building"></i>
+                    <span>Companies</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'employee_list' %}">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Employees</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'individual_list' %}">
+                    <i class="fas fa-user"></i>
+                    <span>Individuals</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'analytics' %}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'contact_request_list' %}">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact Requests</span>
+                </a>
+            </li>
+            <li class="nav-item mt-4">
+                <a class="nav-link" href="{% url 'card_create' %}">
+                    <i class="fas fa-plus"></i>
+                    <span>New Card</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="dashboard-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h3 mb-0 fw-bold">Contact Requests</h1>
+                <p class="text-muted mb-0">Manage inquiries from potential clients</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="table-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">
+                            <i class="fas fa-envelope me-2 text-primary"></i>All Contact Requests
+                        </h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>NAME</th>
+                                    <th>EMAIL</th>
+                                    <th>PHONE</th>
+                                    <th>COMPANY</th>
+                                    <th>MESSAGE</th>
+                                    <th>CARD TYPE</th>
+                                    <th>STATUS</th>
+                                    <th>DATE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if contact_requests %}
+                                    {% for request in contact_requests %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-sm me-3 bg-primary-soft rounded-circle d-flex align-items-center justify-content-center">
+                                                    <i class="fas fa-user text-primary"></i>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0">{{ request.name }}</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="mailto:{{ request.email }}" class="text-decoration-none">
+                                                {{ request.email }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {% if request.phone %}
+                                                <a href="tel:{{ request.phone }}" class="text-decoration-none">
+                                                    {{ request.phone }}
+                                                </a>
+                                            {% else %}
+                                                <span class="text-muted">Not provided</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if request.company_name %}
+                                                {{ request.company_name }}
+                                            {% else %}
+                                                <span class="text-muted">Not provided</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="message-preview" title="{{ request.message }}">
+                                                {{ request.message }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge {% if request.card_type == 'individual' %}badge-soft-info{% else %}badge-soft-primary{% endif %}">
+                                                {{ request.get_card_type_display }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown status-dropdown">
+                                                <button class="btn btn-sm dropdown-toggle 
+                                                    {% if request.status == 'pending' %}
+                                                        btn-outline-warning
+                                                    {% elif request.status == 'in_progress' %}
+                                                        btn-outline-info
+                                                    {% elif request.status == 'completed' %}
+                                                        btn-outline-success
+                                                    {% elif request.status == 'rejected' %}
+                                                        btn-outline-danger
+                                                    {% endif %}"
+                                                    type="button" id="statusDropdown{{ request.id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    {{ request.get_status_display }}
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="statusDropdown{{ request.id }}">
+                                                    <li>
+                                                        <form method="post" action="{% url 'contact_request_update_status' request.id %}">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="status" value="pending">
+                                                            <button type="submit" class="dropdown-item pending">
+                                                                <span class="status-indicator"></span> Pending
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" action="{% url 'contact_request_update_status' request.id %}">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="status" value="in_progress">
+                                                            <button type="submit" class="dropdown-item in-progress">
+                                                                <span class="status-indicator"></span> In Progress
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" action="{% url 'contact_request_update_status' request.id %}">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="status" value="completed">
+                                                            <button type="submit" class="dropdown-item completed">
+                                                                <span class="status-indicator"></span> Completed
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" action="{% url 'contact_request_update_status' request.id %}">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="status" value="rejected">
+                                                            <button type="submit" class="dropdown-item rejected">
+                                                                <span class="status-indicator"></span> Rejected
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted">{{ request.created_at|date:"M d, Y" }}</span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="8" class="text-center py-5">
+                                            <div class="py-4">
+                                                <i class="fas fa-envelope fa-3x text-muted mb-3"></i>
+                                                <p class="mb-0">No contact requests available</p>
+                                                <p class="text-muted">Contact requests from your website will appear here</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Show toast notifications
+    function showToast(message, title = 'Success') {
+        const toastEl = document.getElementById('liveToast');
+        const toast = new bootstrap.Toast(toastEl);
+        
+        document.getElementById('toastTitle').innerText = title;
+        document.getElementById('toastMessage').innerText = message;
+        
+        toast.show();
+    }
+    
+    // Show toast if there's a message
+    {% if messages %}
+        {% for message in messages %}
+            showToast("{{ message }}");
+        {% endfor %}
+    {% endif %}
+</script>
+{% endblock %}

@@ -434,3 +434,29 @@ def analytics(request):
     }
     
     return render(request, 'cards/analytics.html', context)
+
+# Contact Request views
+@login_required
+def contact_request_list(request):
+    """List all contact requests."""
+    contact_requests = ContactRequest.objects.all()
+    return render(request, 'cards/contact_request_list.html', {
+        'contact_requests': contact_requests,
+        'active_page': 'contact_requests'
+    })
+
+@login_required
+def contact_request_update_status(request, pk):
+    """Update the status of a contact request."""
+    contact_request = get_object_or_404(ContactRequest, pk=pk)
+    
+    if request.method == 'POST':
+        new_status = request.POST.get('status')
+        if new_status in [status[0] for status in ContactRequest.STATUS_CHOICES]:
+            contact_request.status = new_status
+            contact_request.save()
+            messages.success(request, f"Contact request status updated to {contact_request.get_status_display()}")
+        else:
+            messages.error(request, "Invalid status")
+    
+    return redirect('contact_request_list')
