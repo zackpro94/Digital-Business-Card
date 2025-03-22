@@ -1,0 +1,1 @@
+web: python manage.py migrate && gunicorn digital_business_card.wsgi
