@@ -1,0 +1,325 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}{{ person.name }} - Digital Business Card{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Main card styles */
+    .card-detail-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .business-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: 100%;
+        max-width: 600px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .business-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card-header {
+        background: linear-gradient(135deg, #6c63ff, #4a47a3);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    .profile-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        object-fit: cover;
+        margin-bottom: 1rem;
+    }
+    
+    .card-body {
+        padding: 2rem;
+    }
+    
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .contact-info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .contact-icon {
+        width: 40px;
+        height: 40px;
+        background: #6c63ff;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 1rem;
+    }
+    
+    .contact-text {
+        flex-grow: 1;
+    }
+    
+    .contact-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    
+    .contact-value {
+        font-weight: 500;
+        color: #212529;
+    }
+    
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .btn-action {
+        background: #6c63ff;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: background 0.3s ease;
+    }
+    
+    .btn-action:hover {
+        background: #4a47a3;
+    }
+    
+    /* Dark mode support */
+    .dark-mode .card-detail-wrapper {
+        background: linear-gradient(135deg, #1a202c, #2d3748);
+    }
+    
+    .dark-mode .business-card {
+        background: #2d3748;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .dark-mode .card-header {
+        background: linear-gradient(135deg, #4a47a3, #6c63ff);
+    }
+    
+    .dark-mode .contact-icon {
+        background: #4a47a3;
+    }
+    
+    .dark-mode .contact-label {
+        color: #a0aec0;
+    }
+    
+    .dark-mode .contact-value {
+        color: #e2e8f0;
+    }
+    
+    .dark-mode .btn-action {
+        background: #4a47a3;
+    }
+    
+    .dark-mode .btn-action:hover {
+        background: #6c63ff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card-detail-wrapper">
+    <div class="business-card">
+        <div class="card-header">
+            {% if person.profile_picture %}
+                <img src="{{ person.profile_picture.url }}" alt="{{ person.name }}" class="profile-img">
+            {% else %}
+                <div class="profile-img bg-primary">
+                    <span>{{ person.name|first }}</span>
+                </div>
+            {% endif %}
+            <h1 class="h3 mb-0">{{ person.name }}</h1>
+            <p class="mb-0">{{ person.job_title }}</p>
+        </div>
+        <div class="card-body">
+            <div class="contact-info">
+                {% if person.phone %}
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <div class="contact-label">Phone</div>
+                            <div class="contact-value"><a href="tel:{{ person.phone }}">{{ person.phone }}</a></div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if person.email %}
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value"><a href="mailto:{{ person.email }}">{{ person.email }}</a></div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if person.website %}
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="contact-text">
+                            <div class="contact-label">Website</div>
+                            <div class="contact-value"><a href="{{ person.website }}" target="_blank">{{ person.website }}</a></div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="action-buttons">
+                <button id="shareButton" class="btn btn-action">
+                    <i class="fas fa-share-alt me-2"></i> Share
+                </button>
+                <button id="saveButton" class="btn btn-action">
+                    <i class="fas fa-address-card me-2"></i> Save
+                </button>
+                <button id="copyButton" class="btn btn-action">
+                    <i class="fas fa-copy me-2"></i> Copy Link
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="fas fa-check-circle me-2 text-success"></i>
+            <strong class="me-auto" id="toastTitle">Success</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toastMessage"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Bootstrap components
+    const toastElement = document.getElementById('toast');
+    const toast = new bootstrap.Toast(toastElement);
+    
+    // Share button functionality
+    document.getElementById('shareButton').addEventListener('click', async function() {
+        try {
+            if (navigator.share) {
+                await navigator.share({
+                    title: "{{ person.name }}'s Digital Business Card",
+                    text: "Check out {{ person.name }}'s digital business card",
+                    url: window.location.href
+                });
+                showToast('Card shared successfully!', 'Shared');
+            } else {
+                // Fallback to copy link if Web Share API is not available
+                copyCardLink();
+            }
+        } catch (error) {
+            console.error('Error sharing:', error);
+            showToast('Could not share card. Link copied instead.', 'Note');
+            copyCardLink();
+        }
+    });
+    
+    // Save contact button functionality
+    document.getElementById('saveButton').addEventListener('click', function() {
+        saveContact();
+    });
+    
+    // Copy link button functionality
+    document.getElementById('copyButton').addEventListener('click', function() {
+        copyCardLink();
+    });
+    
+    // Function to save contact as vCard
+    function saveContact() {
+        const vCard = generateVCard();
+        downloadVCard(vCard);
+        showToast('Contact saved successfully!', 'Saved');
+    }
+    
+    // Function to generate vCard
+    function generateVCard() {
+        const vCard = [
+            'BEGIN:VCARD',
+            'VERSION:3.0',
+            `FN:{{ person.name }}`,
+            `TITLE:{{ person.job_title }}`,
+            `TEL;TYPE=WORK,VOICE:{{ person.phone }}`,
+            `EMAIL;TYPE=PREF,INTERNET:{{ person.email }}`,
+            `URL:{{ person.website }}`,
+            'END:VCARD'
+        ].join('\n');
+        
+        return vCard;
+    }
+    
+    // Function to download vCard
+    function downloadVCard(vCard) {
+        const blob = new Blob([vCard], { type: 'text/vcard' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = '{{ person.name|slugify }}_contact.vcf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+    
+    // Function to copy card link
+    function copyCardLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                showToast('Link copied to clipboard!', 'Copied');
+            })
+            .catch(err => {
+                console.error('Failed to copy:', err);
+                showToast('Failed to copy link', 'Error');
+            });
+    }
+    
+    // Function to show toast notification
+    function showToast(message, title = 'Success') {
+        const toastTitle = document.getElementById('toastTitle');
+        const toastMessage = document.getElementById('toastMessage');
+        
+        toastTitle.textContent = title;
+        toastMessage.textContent = message;
+        
+        toast.show();
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,341 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}{{ title }} - Digital Business Card{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="h4 mb-0">{{ title }}</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <p class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> 
+                        You can create a business card for either an employee or an individual client, but not both.
+                    </p>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.employee.id_for_label }}" class="form-label">Employee</label>
+                        {{ form.employee }}
+                        {% if form.employee.errors %}
+                            <div class="text-danger">{{ form.employee.errors }}</div>
+                        {% endif %}
+                        <div class="form-text">Select an employee to create a business card for them.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.individual_client.id_for_label }}" class="form-label">Individual Client</label>
+                        {{ form.individual_client }}
+                        {% if form.individual_client.errors %}
+                            <div class="text-danger">{{ form.individual_client.errors }}</div>
+                        {% endif %}
+                        <div class="form-text">Select an individual client to create a business card for them.</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="{{ form.theme.id_for_label }}" class="form-label">Card Theme</label>
+                        {{ form.theme }}
+                        {% if form.theme.errors %}
+                            <div class="text-danger">{{ form.theme.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Theme Preview Section -->
+                    <div class="mb-4">
+                        <h5 class="mb-3">Theme Preview</h5>
+                        <div class="row theme-previews">
+                            <div class="col-md-4 mb-3">
+                                <div class="card theme-preview-card" data-theme="default">
+                                    <div class="card-header">Default Theme</div>
+                                    <div class="card-body text-center p-3">
+                                        <div class="default-preview-card mb-2">
+                                            <div class="preview-header"></div>
+                                            <div class="preview-body">
+                                                <div class="preview-avatar"></div>
+                                                <div class="preview-name"></div>
+                                                <div class="preview-job"></div>
+                                                <div class="preview-contact"></div>
+                                                <div class="preview-social"></div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-primary select-theme" data-theme="default">Select</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card theme-preview-card" data-theme="elegant">
+                                    <div class="card-header">Elegant Theme</div>
+                                    <div class="card-body text-center p-3">
+                                        <div class="elegant-preview-card mb-2">
+                                            <div class="preview-line"></div>
+                                            <div class="preview-body">
+                                                <div class="preview-avatar"></div>
+                                                <div class="preview-name"></div>
+                                                <div class="preview-job"></div>
+                                                <div class="preview-contact"></div>
+                                                <div class="preview-social"></div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-primary select-theme" data-theme="elegant">Select</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card theme-preview-card" data-theme="modern">
+                                    <div class="card-header">Modern Theme</div>
+                                    <div class="card-body text-center p-3">
+                                        <div class="modern-preview-card mb-2">
+                                            <div class="preview-header"></div>
+                                            <div class="preview-body">
+                                                <div class="preview-profile">
+                                                    <div class="preview-avatar"></div>
+                                                    <div class="preview-info">
+                                                        <div class="preview-name"></div>
+                                                        <div class="preview-job"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="preview-contact-box"></div>
+                                                <div class="preview-social"></div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-primary select-theme" data-theme="modern">Select</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'card_list' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Theme preview styles */
+    .theme-preview-card {
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .theme-preview-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .theme-preview-card.selected {
+        border: 2px solid var(--primary-color);
+    }
+    
+    /* Default Theme Preview */
+    .default-preview-card {
+        width: 100%;
+        height: 180px;
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .default-preview-card .preview-header {
+        height: 30%;
+        background-color: var(--primary-color);
+    }
+    
+    .default-preview-card .preview-body {
+        height: 70%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    /* Elegant Theme Preview */
+    .elegant-preview-card {
+        width: 100%;
+        height: 180px;
+        border-radius: 8px;
+        background: linear-gradient(145deg, #ffffff, #f7f7f7);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+    }
+    
+    .elegant-preview-card .preview-line {
+        width: 8px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    .elegant-preview-card .preview-body {
+        flex: 1;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    /* Modern Theme Preview */
+    .modern-preview-card {
+        width: 100%;
+        height: 180px;
+        border-radius: 15px;
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .modern-preview-card .preview-profile {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+    
+    .modern-preview-card .preview-contact-box {
+        background-color: #f8f9fa;
+        height: 40px;
+        margin: 0 10px;
+        border-radius: 8px;
+    }
+    
+    /* Common preview elements */
+    .preview-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        margin-bottom: 10px;
+    }
+    
+    .modern-preview-card .preview-avatar {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 0;
+        border-radius: 8px;
+    }
+    
+    .preview-info {
+        margin-left: 8px;
+        text-align: left;
+        flex: 1;
+    }
+    
+    .preview-name {
+        height: 8px;
+        width: 70%;
+        background-color: #333;
+        margin-bottom: 8px;
+        border-radius: 4px;
+    }
+    
+    .preview-job {
+        height: 6px;
+        width: 50%;
+        background-color: #999;
+        margin-bottom: 10px;
+        border-radius: 3px;
+    }
+    
+    .preview-contact {
+        height: 6px;
+        width: 80%;
+        background-color: #ddd;
+        margin-bottom: 6px;
+        border-radius: 3px;
+    }
+    
+    .preview-social {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    
+    .preview-social::before {
+        content: '';
+        display: block;
+        width: 60%;
+        height: 6px;
+        background-color: #eee;
+        border-radius: 3px;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Make employee and individual client fields mutually exclusive
+    const employeeField = document.getElementById('{{ form.employee.id_for_label }}');
+    const individualField = document.getElementById('{{ form.individual_client.id_for_label }}');
+    const themeField = document.getElementById('{{ form.theme.id_for_label }}');
+    
+    employeeField.addEventListener('change', function() {
+        if (this.value) {
+            individualField.value = '';
+        }
+    });
+    
+    individualField.addEventListener('change', function() {
+        if (this.value) {
+            employeeField.value = '';
+        }
+    });
+    
+    // Theme preview and selection
+    const themeCards = document.querySelectorAll('.theme-preview-card');
+    const selectThemeButtons = document.querySelectorAll('.select-theme');
+    
+    // Initialize selected theme
+    highlightSelectedTheme(themeField.value);
+    
+    // Add click event to preview cards
+    themeCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const theme = this.getAttribute('data-theme');
+            themeField.value = theme;
+            highlightSelectedTheme(theme);
+        });
+    });
+    
+    // Add click event to select buttons
+    selectThemeButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent the card click event from firing
+            const theme = this.getAttribute('data-theme');
+            themeField.value = theme;
+            highlightSelectedTheme(theme);
+        });
+    });
+    
+    // Function to highlight the selected theme
+    function highlightSelectedTheme(theme) {
+        themeCards.forEach(card => {
+            if (card.getAttribute('data-theme') === theme) {
+                card.classList.add('selected');
+            } else {
+                card.classList.remove('selected');
+            }
+        });
+    }
+    
+    // Update highlight when theme is changed in the dropdown
+    themeField.addEventListener('change', function() {
+        highlightSelectedTheme(this.value);
+    });
+</script>
+{% endblock %}

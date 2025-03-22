@@ -1,0 +1,78 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}Individual Clients - Digital Business Card{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Individual Clients</h1>
+    <a href="{% url 'individual_create' %}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add Individual Client
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Job Title</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Business Card</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for individual in individuals %}
+                    <tr>
+                        <td>
+                            {% if individual.profile_picture %}
+                                <img src="{{ individual.profile_picture.url }}" alt="{{ individual.name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                            {% else %}
+                                <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; border-radius: 50%;">
+                                    {{ individual.name|first }}
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td>{{ individual.name }}</td>
+                        <td>{{ individual.job_title }}</td>
+                        <td>{{ individual.email }}</td>
+                        <td>{{ individual.phone }}</td>
+                        <td>
+                            {% if individual.businesscard_set.exists %}
+                                {% with card=individual.businesscard_set.first %}
+                                <a href="{% url 'card_detail' card.uuid %}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-id-card"></i> View Card
+                                </a>
+                                {% endwith %}
+                            {% else %}
+                                <a href="{% url 'card_create' %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-plus"></i> Create Card
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{% url 'individual_edit' individual.id %}" class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="{% url 'individual_delete' individual.id %}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center">No individual clients available</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,155 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}Home - Digital Business Card{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Hero Section -->
+    <div class="row align-items-center mb-5">
+        <div class="col-lg-6" data-aos="fade-right">
+            <h1 class="display-4 fw-bold mb-4">Create Your Digital Business Card</h1>
+            <p class="lead mb-4">Share your professional identity with a modern, interactive digital business card that stands out.</p>
+            <div class="d-flex gap-3 mb-5">
+                {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg"><i class="fas fa-sign-in-alt me-2"></i> Get Started</a>
+                {% endif %}
+                <a href="#how-it-works" class="btn btn-outline-secondary btn-lg"><i class="fas fa-info-circle me-2"></i> Learn More</a>
+            </div>
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+            <div class="position-relative floating-element">
+                <div class="position-absolute top-0 start-0 translate-middle bg-primary rounded-circle" style="width: 100px; height: 100px; opacity: 0.5; z-index: -1;"></div>
+                <div class="position-absolute bottom-0 end-0 translate-middle bg-secondary rounded-circle" style="width: 150px; height: 150px; opacity: 0.3; z-index: -1;"></div>
+                <div class="business-card mx-auto shadow">
+                    <div class="text-center">
+                        <div class="profile-img bg-primary d-flex align-items-center justify-content-center mx-auto mb-3">
+                            <span class="text-white display-6">J</span>
+                        </div>
+                        <h3 class="fw-bold">John Doe</h3>
+                        <p class="text-muted">Marketing Director</p>
+                        <p class="company-name">Acme Inc.</p>
+                        <div class="social-links mt-3">
+                            <a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row my-5 pt-5" id="features">
+        <div class="col-12 text-center mb-5" data-aos="fade-up">
+            <h2 class="display-5 fw-bold mb-3">Why Choose Digital Business Cards?</h2>
+            <p class="lead w-75 mx-auto">Say goodbye to traditional paper cards and hello to the future of networking.</p>
+        </div>
+        
+        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3 class="h4 fw-bold">Eco-Friendly</h3>
+                <p>Go green with paperless digital cards that help reduce your carbon footprint.</p>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="h4 fw-bold">Analytics</h3>
+                <p>Track views and shares to understand how your card is performing.</p>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h3 class="h4 fw-bold">Always Updated</h3>
+                <p>Update your information anytime, no need to reprint new cards.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="row my-5 py-5" id="how-it-works">
+        <div class="col-12 text-center mb-5" data-aos="fade-up">
+            <h2 class="display-5 fw-bold mb-3">How It Works</h2>
+            <p class="lead w-75 mx-auto">Three simple steps to create and share your digital business card.</p>
+        </div>
+        
+        <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card h-100 border-0">
+                <div class="card-body text-center">
+                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                        <h3 class="fw-bold text-primary mb-0">1</h3>
+                    </div>
+                    <h4 class="card-title">Create</h4>
+                    <p class="card-text">Set up your digital business card with all your contact information and social media profiles.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="card h-100 border-0">
+                <div class="card-body text-center">
+                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                        <h3 class="fw-bold text-primary mb-0">2</h3>
+                    </div>
+                    <h4 class="card-title">Share</h4>
+                    <p class="card-text">Share your digital business card with a unique URL or QR code that's easy to scan.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="card h-100 border-0">
+                <div class="card-body text-center">
+                    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                        <h3 class="fw-bold text-primary mb-0">3</h3>
+                    </div>
+                    <h4 class="card-title">Track</h4>
+                    <p class="card-text">Monitor your card's performance with detailed analytics on views and shares.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="row my-5 py-5">
+        <div class="col-12">
+            <div class="card border-0 bg-primary text-white" data-aos="fade-up">
+                <div class="card-body p-5 text-center">
+                    <h2 class="display-6 fw-bold mb-4">Ready to Create Your Digital Business Card?</h2>
+                    <p class="lead mb-4">Join thousands of professionals who have already switched to digital business cards.</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'dashboard' %}" class="btn btn-light btn-lg text-primary"><i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard</a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-light btn-lg text-primary"><i class="fas fa-sign-in-alt me-2"></i> Get Started</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add floating animation
+        addFloatingAnimation();
+    });
+</script>
+{% endblock %}

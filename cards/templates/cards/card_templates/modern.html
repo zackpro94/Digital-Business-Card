@@ -1,0 +1,738 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}{{ person.name }} - Digital Business Card (Modern Theme){% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary-color: #4f46e5;
+        --accent-color: #818cf8;
+        --primary-rgb: 79, 70, 229;
+    }
+    
+    /* Main container styles */
+    .card-container {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #000000 0%, #e2e8f0 100%);
+        padding: 3rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Modern theme styles */
+    .modern-theme {
+        background: white;
+        border-radius: 16px;
+        padding: 2.5rem 2rem;
+        box-shadow: 
+            0 10px 25px -5px rgba(0, 0, 0, 0.1),
+            0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        max-width: 550px;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+        overflow: visible;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    .modern-theme:hover {
+        box-shadow: 
+            0 15px 30px -5px rgba(0, 0, 0, 0.15),
+            0 10px 15px -5px rgba(0, 0, 0, 0.07);
+    }
+    
+    /* Decorative elements */
+    .modern-theme::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    }
+    
+    /* Profile section */
+    .profile-section {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .profile-img {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border: 4px solid white;
+        transition: all 0.3s ease;
+    }
+    
+    .profile-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .profile-info {
+        margin-left: 1.5rem;
+    }
+    
+    .name {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+        color: #1e293b;
+        letter-spacing: -0.5px;
+    }
+    
+    .job-title {
+        color: var(--primary-color);
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        opacity: 0.9;
+    }
+    
+    .company-name {
+        font-weight: 600;
+        color: #64748b;
+        font-size: 0.95rem;
+    }
+    
+    /* Company logo styling */
+    .company-logo-container {
+        display: flex;
+        justify-content: center;
+        margin: 1.5rem 0;
+        position: relative;
+    }
+    
+    .company-logo {
+        max-width: 150px;
+        max-height: 80px;
+        object-fit: contain;
+        border-radius: 8px;
+        padding: 10px;
+        background: white;
+        box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+    }
+    
+    .company-logo:hover {
+        transform: translateY(-3px);
+        box-shadow: 
+            0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Contact information */
+    .contact-info {
+        background-color: #f8f4f4;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+    }
+    
+    .contact-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        margin-bottom: 0.75rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .contact-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    }
+    
+    .contact-item:last-child {
+        margin-bottom: 0;
+    }
+    
+    .contact-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        background-color: var(--primary-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .contact-item:hover .contact-icon {
+        transform: scale(1.1);
+    }
+    
+    .contact-content {
+        flex: 1;
+    }
+    
+    .contact-label {
+        font-size: 0.75rem;
+        color: #64748b;
+        margin-bottom: 0.15rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+    
+    .contact-value {
+        font-size: 0.95rem;
+        color: #1e293b;
+        font-weight: 500;
+    }
+    
+    .contact-value a {
+        color: #1e293b;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+    
+    .contact-value a:hover {
+        color: var(--primary-color);
+    }
+    
+    /* Social Media Links */
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin: 2.5rem 0;
+        position: relative;
+        padding: 0.5rem;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 30px;
+    }
+    
+    .social-links::before,
+    .social-links::after {
+        content: '';
+        position: absolute;
+        width: 35%;
+        height: 2px;
+        top: 50%;
+        background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        opacity: 0.2;
+        pointer-events: none;
+    }
+    
+    .social-links::before {
+        left: 0;
+    }
+    
+    .social-links::after {
+        right: 0;
+    }
+    
+    .social-link {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        position: relative;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .social-link i {
+        font-size: 20px;
+        transition: all 0.3s ease;
+    }
+
+    /* Brand colors */
+    .social-link.linkedin { border-color: #0077b5; }
+    .social-link.linkedin i { color: #0077b5; }
+    
+    .social-link.twitter { border-color: #1da1f2; }
+    .social-link.twitter i { color: #1da1f2; }
+    
+    .social-link.facebook { border-color: #4267B2; }
+    .social-link.facebook i { color: #4267B2; }
+    
+    .social-link.instagram { border-color: #E1306C; }
+    .social-link.instagram i { color: #E1306C; }
+
+    .social-link:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        background: currentColor;
+    }
+
+    .social-link:hover i {
+        color: white;
+    }
+
+    @media (max-width: 640px) {
+        .social-link {
+            width: 40px;
+            height: 40px;
+        }
+        .social-link i {
+            font-size: 16px;
+        }
+        .social-links {
+            gap: 1rem;
+        }
+    }
+    
+    /* Action buttons */
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    
+    .btn-modern {
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .btn-primary-modern {
+        background-color: var(--primary-color);
+        color: white;
+        box-shadow: 0 4px 6px rgba(var(--primary-rgb), 0.25);
+    }
+    
+    .btn-secondary-modern {
+        background-color: white;
+        color: #1e293b;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+    }
+    
+    .btn-modern:hover {
+        transform: translateY(-3px);
+    }
+    
+    .btn-primary-modern:hover {
+        background-color: var(--accent-color);
+        box-shadow: 0 6px 8px rgba(var(--primary-rgb), 0.3);
+    }
+    
+    .btn-secondary-modern:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.08);
+    }
+    
+    /* Modern badge */
+    .modern-badge {
+        position: absolute;
+        top: 1.25rem;
+        right: 1.25rem;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 0.35rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+        z-index: 2;
+    }
+    
+    /* Stats card */
+    .stats-card {
+        border-radius: 12px;
+        background-color: white;
+        box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+    }
+    
+    .stats-header {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 1rem 1.25rem;
+    }
+    
+    .stats-body {
+        padding: 1.25rem;
+    }
+    
+    .stats-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    
+    .stats-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background-color: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        color: var(--primary-color);
+    }
+    
+    .stats-info {
+        flex: 1;
+    }
+    
+    .stats-value {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1e293b;
+    }
+    
+    .stats-label {
+        font-size: 0.75rem;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 640px) {
+        .modern-theme {
+            padding: 2rem 1.5rem;
+        }
+        
+        .profile-section {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .profile-info {
+            margin-left: 0;
+            margin-top: 1.25rem;
+        }
+        
+        .btn-group {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card-container">
+    <div class="modern-theme">
+        {% if card.is_premium %}
+        <div class="modern-badge">Premium</div>
+        {% endif %}
+        
+        <div class="profile-section">
+            {% if person.profile_picture %}
+                <img src="{{ person.profile_picture.url }}" alt="{{ person.name }}" class="profile-img">
+            {% else %}
+                <div class="profile-img bg-primary d-flex align-items-center justify-content-center">
+                    <span class="text-white h2">{{ person.name|first }}</span>
+                </div>
+            {% endif %}
+            
+            <div class="profile-info">
+                <h1 class="name">{{ person.name }}</h1>
+                <p class="job-title">{{ person.job_title }}</p>
+                
+                {% if is_employee and company %}
+                    <p class="company-name">{{ company.name }}</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if is_employee and company and company.logo %}
+        <div class="company-logo-container">
+            <img src="{{ company.logo.url }}" alt="{{ company.name }}" class="company-logo">
+        </div>
+        {% endif %}
+        
+        <div class="contact-info">
+            {% if person.phone %}
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-label">Phone</div>
+                    <div class="contact-value">
+                        <a href="tel:{{ person.phone }}">{{ person.phone }}</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if person.email %}
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">
+                        <a href="mailto:{{ person.email }}">{{ person.email }}</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if person.website or company.website %}
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-label">Website</div>
+                    <div class="contact-value">
+                        {% if person.website %}
+                            <a href="{{ person.website }}" target="_blank" rel="noopener">{{ person.website }}</a>
+                        {% elif company.website %}
+                            <a href="{{ company.website }}" target="_blank" rel="noopener">{{ company.website }}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if company.address %}
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-label">Address</div>
+                    <div class="contact-value">
+                        <a href="https://maps.google.com/?q={{ company.address|urlencode }}" target="_blank" rel="noopener">
+                            {{ company.address }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="social-links">
+            {% if person.linkedin %}
+            <a href="{{ person.linkedin }}" target="_blank" rel="noopener" class="social-link linkedin">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            {% endif %}
+            
+            {% if person.twitter %}
+            <a href="{{ person.twitter }}" target="_blank" rel="noopener" class="social-link twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            {% endif %}
+            
+            {% if person.facebook %}
+            <a href="{{ person.facebook }}" target="_blank" rel="noopener" class="social-link facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            {% endif %}
+            
+            {% if person.instagram %}
+            <a href="{{ person.instagram }}" target="_blank" rel="noopener" class="social-link instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            {% endif %}
+        </div>
+        
+        <!-- Add this to test if social icons are visible -->
+        <!-- <div class="social-links">
+            <a href="#" class="social-link linkedin">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="social-link twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div> -->
+        
+        <div class="btn-group">
+            <button onclick="shareCard('{{ card.uuid }}')" class="btn-modern btn-primary-modern">
+                <i class="fas fa-share-alt me-2"></i> Share Card
+            </button>
+            <button onclick="saveContact()" class="btn-modern btn-secondary-modern">
+                <i class="fas fa-address-card me-2"></i> Save Contact
+            </button>
+        </div>
+    </div>
+    
+    {% if stats %}
+    <div class="stats-card mt-4">
+        <div class="stats-header">
+            <h5 class="mb-0">Card Statistics</h5>
+        </div>
+        <div class="stats-body">
+            <div class="stats-item">
+                <div class="stats-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="stats-info">
+                    <div class="stats-value">{{ stats.views }}</div>
+                    <div class="stats-label">Total Views</div>
+                </div>
+            </div>
+            <div class="stats-item">
+                <div class="stats-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="stats-info">
+                    <div class="stats-value">{{ stats.last_viewed|date:"M d, Y" }}</div>
+                    <div class="stats-label">Last Viewed</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Toast notification -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="fas fa-check-circle me-2 text-success"></i>
+            <strong class="me-auto" id="toastTitle">Success</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toastMessage"></div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+    
+    // Initialize toast
+    const toastElement = document.getElementById('toast');
+    const toast = new bootstrap.Toast(toastElement);
+    
+    // Share functionality
+    window.shareCard = async function(uuid) {
+        try {
+            if (navigator.share) {
+                await navigator.share({
+                    title: "{{ person.name }}'s Digital Business Card",
+                    text: "Check out {{ person.name }}'s digital business card",
+                    url: window.location.href
+                });
+                showToast('Card shared successfully!', 'Shared');
+            } else {
+                copyCardLink();
+            }
+        } catch (error) {
+            console.error('Error sharing:', error);
+            copyCardLink();
+        }
+    };
+    
+    // Copy link functionality
+    function copyCardLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(function() {
+            showToast('Link copied to clipboard!', 'Copied');
+        }).catch(function(err) {
+            console.error('Could not copy text: ', err);
+            showToast('Failed to copy link', 'Error', 'error');
+        });
+    }
+    
+    // Save contact functionality
+    window.saveContact = function() {
+        const vCard = generateVCard();
+        downloadVCard(vCard);
+        showToast('Contact saved successfully!', 'Saved');
+    };
+    
+    function generateVCard() {
+        return [
+            'BEGIN:VCARD',
+            'VERSION:3.0',
+            `FN:{{ person.name }}`,
+            `TITLE:{{ person.job_title }}`,
+            `TEL;TYPE=WORK,VOICE:{{ person.phone }}`,
+            `EMAIL;TYPE=WORK:{{ person.email }}`,
+            {% if company %}
+            `ORG:{{ company.name }}`,
+            {% endif %}
+            {% if person.website %}
+            `URL:{{ person.website }}`,
+            {% elif company.website %}
+            `URL:{{ company.website }}`,
+            {% endif %}
+            {% if company.address %}
+            `ADR;TYPE=WORK:;;{{ company.address }}`,
+            {% endif %}
+            'END:VCARD'
+        ].join('\n');
+    }
+    
+    function downloadVCard(vCard) {
+        const blob = new Blob([vCard], { type: 'text/vcard' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `{{ person.name }}.vcf`;
+        document.body.appendChild(a);
+        a.click();
+        URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    }
+    
+    function showToast(message, title = 'Success', type = 'success') {
+        const toastTitle = document.getElementById('toastTitle');
+        const toastMessage = document.getElementById('toastMessage');
+        
+        toastTitle.textContent = title;
+        toastMessage.textContent = message;
+        
+        // Set icon based on type
+        const icon = toastTitle.previousElementSibling;
+        if (type === 'success') {
+            icon.className = 'fas fa-check-circle me-2 text-success';
+        } else if (type === 'error') {
+            icon.className = 'fas fa-exclamation-circle me-2 text-danger';
+        }
+        
+        toast.show();
+    }
+});
+
+</script>
+{% endblock %}

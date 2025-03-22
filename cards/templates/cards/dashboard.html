@@ -1,0 +1,671 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}Dashboard - Digital Business Card{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-wrapper {
+        display: flex;
+        min-height: calc(100vh - 70px);
+    }
+    
+    .dashboard-sidebar {
+        width: 280px;
+        background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
+        color: white;
+        padding: 2rem 1.5rem;
+        position: sticky;
+        top: 70px;
+        height: calc(100vh - 70px);
+        transition: all 0.3s;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+    }
+    
+    .dashboard-sidebar .nav-link {
+        color: rgba(255, 255, 255, 0.8) !important;
+        padding: 0.8rem 1rem;
+        border-radius: 10px;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+    }
+    
+    .dashboard-sidebar .nav-link:hover,
+    .dashboard-sidebar .nav-link.active {
+        background: rgba(255, 255, 255, 0.15);
+        color: white !important;
+        transform: translateX(5px);
+    }
+    
+    .dashboard-sidebar .nav-link i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+    }
+    
+    .dashboard-content {
+        flex: 1;
+        padding: 2rem;
+        background-color: #f8f9fc;
+    }
+    
+    .stat-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+        height: 100%;
+        transition: all 0.3s;
+        border: none;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stat-card .stat-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .stat-card .stat-value {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        line-height: 1;
+    }
+    
+    .stat-card .stat-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+        font-weight: 500;
+    }
+    
+    .stat-card .stat-bg {
+        position: absolute;
+        right: -20px;
+        bottom: -20px;
+        font-size: 5rem;
+        opacity: 0.05;
+        transform: rotate(-15deg);
+    }
+    
+    .analytics-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+        height: 100%;
+        transition: all 0.3s;
+    }
+    
+    .analytics-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .analytics-card .analytics-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .analytics-card .analytics-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin: 0;
+    }
+    
+    .analytics-card .analytics-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        color: white;
+    }
+    
+    .analytics-card .analytics-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+    }
+    
+    .analytics-card .analytics-subtitle {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    
+    .table-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+    
+    .table-card .card-header {
+        background: white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 1.25rem 1.5rem;
+    }
+    
+    .table-card .card-title {
+        font-weight: 600;
+        margin: 0;
+        font-size: 1.1rem;
+    }
+    
+    .table-card table {
+        margin-bottom: 0;
+    }
+    
+    .table-card th {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        color: #6c757d;
+        padding: 1rem 1.5rem;
+        border-top: none;
+    }
+    
+    .table-card td {
+        padding: 1rem 1.5rem;
+        vertical-align: middle;
+    }
+    
+    .table-card tbody tr {
+        transition: all 0.2s;
+    }
+    
+    .table-card tbody tr:hover {
+        background-color: rgba(67, 97, 238, 0.03);
+    }
+    
+    .card-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+    }
+    
+    .badge-soft-success {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+    }
+    
+    .badge-soft-primary {
+        background-color: rgba(67, 97, 238, 0.1);
+        color: #4361ee;
+    }
+    
+    .badge-soft-info {
+        background-color: rgba(23, 162, 184, 0.1);
+        color: #17a2b8;
+    }
+    
+    .badge-soft-warning {
+        background-color: rgba(255, 193, 7, 0.1);
+        color: #ffc107;
+    }
+    
+    .btn-action {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: all 0.2s;
+        background: rgba(67, 97, 238, 0.1);
+        color: #4361ee;
+        border: none;
+    }
+    
+    .btn-action:hover {
+        background: #4361ee;
+        color: white;
+    }
+    
+    .btn-action-success {
+        background: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+    }
+    
+    .btn-action-success:hover {
+        background: #28a745;
+        color: white;
+    }
+    
+    .btn-action-warning {
+        background: rgba(255, 193, 7, 0.1);
+        color: #ffc107;
+    }
+    
+    .btn-action-warning:hover {
+        background: #ffc107;
+        color: white;
+    }
+    
+    .btn-action-danger {
+        background: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+    }
+    
+    .btn-action-danger:hover {
+        background: #dc3545;
+        color: white;
+    }
+    
+    @media (max-width: 992px) {
+        .dashboard-sidebar {
+            width: 70px;
+            padding: 2rem 0.5rem;
+        }
+        
+        .dashboard-sidebar .nav-link span {
+            display: none;
+        }
+        
+        .dashboard-sidebar .nav-link i {
+            margin-right: 0;
+            font-size: 1.2rem;
+        }
+        
+        .dashboard-sidebar .sidebar-header span {
+            display: none;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .dashboard-wrapper {
+            flex-direction: column;
+        }
+        
+        .dashboard-sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+            top: 0;
+            padding: 1rem;
+        }
+        
+        .dashboard-sidebar .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+        
+        .dashboard-sidebar .nav-link {
+            white-space: nowrap;
+            margin-right: 0.5rem;
+            margin-bottom: 0;
+        }
+        
+        .dashboard-sidebar .nav-link span {
+            display: inline-block;
+        }
+        
+        .dashboard-sidebar .nav-link i {
+            margin-right: 10px;
+        }
+        
+        .dashboard-content {
+            padding: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Toast for notifications -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="dashboardToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="fas fa-check-circle me-2 text-success"></i>
+            <strong class="me-auto">Success</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Action completed successfully!
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <div class="dashboard-sidebar">
+        <div class="sidebar-header mb-4 d-flex align-items-center">
+            <i class="fas fa-id-card me-2"></i>
+            <span class="fw-bold">Digital Cards</span>
+        </div>
+        
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'dashboard' %}">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'card_list' %}">
+                    <i class="fas fa-id-card"></i>
+                    <span>Business Cards</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'company_list' %}">
+                    <i class="fas fa-building"></i>
+                    <span>Companies</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'employee_list' %}">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Employees</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'individual_list' %}">
+                    <i class="fas fa-user"></i>
+                    <span>Individuals</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'analytics' %}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+            <li class="nav-item mt-4">
+                <a class="nav-link" href="{% url 'card_create' %}">
+                    <i class="fas fa-plus"></i>
+                    <span>New Card</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="dashboard-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h3 mb-0 fw-bold">Dashboard</h1>
+                <p class="text-muted mb-0">Welcome back! Here's what's happening with your cards.</p>
+            </div>
+            <div>
+                <a href="{% url 'card_create' %}" class="btn btn-primary d-flex align-items-center">
+                    <i class="fas fa-plus me-2"></i>New Card
+                </a>
+            </div>
+        </div>
+        
+        <!-- Stats Cards Row -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: rgba(67, 97, 238, 0.1); color: #4361ee;">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="stat-value">{{ total_companies }}</div>
+                    <div class="stat-label">Companies</div>
+                    <i class="fas fa-building stat-bg"></i>
+                    <div class="mt-3">
+                        <a href="{% url 'company_list' %}" class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center">
+                            <i class="fas fa-eye me-1"></i> View All
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: rgba(40, 167, 69, 0.1); color: #28a745;">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="stat-value">{{ total_employees }}</div>
+                    <div class="stat-label">Employees</div>
+                    <i class="fas fa-user-tie stat-bg"></i>
+                    <div class="mt-3">
+                        <a href="{% url 'employee_list' %}" class="btn btn-sm btn-outline-success d-flex align-items-center justify-content-center">
+                            <i class="fas fa-eye me-1"></i> View All
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: rgba(23, 162, 184, 0.1); color: #17a2b8;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="stat-value">{{ total_individuals }}</div>
+                    <div class="stat-label">Individuals</div>
+                    <i class="fas fa-user stat-bg"></i>
+                    <div class="mt-3">
+                        <a href="{% url 'individual_list' %}" class="btn btn-sm btn-outline-info d-flex align-items-center justify-content-center">
+                            <i class="fas fa-eye me-1"></i> View All
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: rgba(255, 193, 7, 0.1); color: #ffc107;">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="stat-value">{{ total_cards }}</div>
+                    <div class="stat-label">Business Cards</div>
+                    <i class="fas fa-id-card stat-bg"></i>
+                    <div class="mt-3">
+                        <a href="{% url 'card_list' %}" class="btn btn-sm btn-outline-warning d-flex align-items-center justify-content-center">
+                            <i class="fas fa-eye me-1"></i> View All
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Analytics Overview -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="analytics-card">
+                    <div class="analytics-header">
+                        <h5 class="analytics-title">Total Views</h5>
+                        <div class="analytics-icon" style="background-color: #4361ee;">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="analytics-value">{{ total_views }}</div>
+                    <div class="progress mb-2" style="height: 8px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="analytics-subtitle">
+                        <i class="fas fa-arrow-up text-success me-1"></i> 
+                        <span>12% increase</span> compared to last month
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="analytics-card">
+                    <div class="analytics-header">
+                        <h5 class="analytics-title">Total Shares</h5>
+                        <div class="analytics-icon" style="background-color: #28a745;">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                    </div>
+                    <div class="analytics-value">{{ total_shares }}</div>
+                    <div class="progress mb-2" style="height: 8px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="analytics-subtitle">
+                        <i class="fas fa-arrow-up text-success me-1"></i> 
+                        <span>8% increase</span> compared to last month
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Top Viewed Cards -->
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="table-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">
+                            <i class="fas fa-star me-2 text-warning"></i>Top Viewed Cards
+                        </h5>
+                        <a href="{% url 'card_list' %}" class="btn btn-sm btn-outline-primary">View All Cards</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>CARD</th>
+                                    <th>TYPE</th>
+                                    <th class="text-center">VIEWS</th>
+                                    <th class="text-center">SHARES</th>
+                                    <th class="text-center">LAST VIEWED</th>
+                                    <th class="text-end">ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for card in top_cards %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-avatar me-3" style="background-color: {% if card.employee %}#4361ee{% else %}#17a2b8{% endif %}">
+                                                {% if card.employee %}
+                                                    <i class="fas fa-user-tie"></i>
+                                                {% else %}
+                                                    <i class="fas fa-user"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium">
+                                                    {% if card.employee %}
+                                                        {{ card.employee.name }}
+                                                    {% else %}
+                                                        {{ card.individual_client.name }}
+                                                    {% endif %}
+                                                </div>
+                                                <small class="text-muted">
+                                                    {% if card.employee %}
+                                                        {{ card.employee.company.name }}
+                                                    {% endif %}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge {% if card.employee %}badge-soft-primary{% else %}badge-soft-info{% endif %} rounded-pill px-2 py-1">
+                                            {% if card.employee %}
+                                                <i class="fas fa-building me-1"></i> Corporate
+                                            {% else %}
+                                                <i class="fas fa-user me-1"></i> Individual
+                                            {% endif %}
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="fw-medium">{{ card.views }}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="fw-medium">{{ card.shares }}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <small class="text-muted">{{ card.last_viewed|date:"M d, Y" }}</small>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <a href="{% url 'card_detail' card.uuid %}" class="btn-action" data-bs-toggle="tooltip" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="{% url 'card_edit' card.id %}" class="btn-action btn-action-success" data-bs-toggle="tooltip" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button class="btn-action btn-action-warning share-card-btn" data-card-uuid="{{ card.uuid }}" data-bs-toggle="tooltip" title="Share">
+                                                <i class="fas fa-share-alt"></i>
+                                            </button>
+                                            <button class="btn-action btn-action-danger" data-bs-toggle="tooltip" title="Delete" onclick="confirmDelete('{% url 'card_delete' card.id %}')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center py-5">
+                                        <div class="py-4">
+                                            <i class="fas fa-id-card fa-3x text-muted mb-3"></i>
+                                            <p class="mb-0">No cards available</p>
+                                            <a href="{% url 'card_create' %}" class="btn btn-primary mt-3">
+                                                <i class="fas fa-plus me-2"></i>Create Your First Card
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // Function to show toast notifications
+    function showToast(message, title = 'Success') {
+        const toast = document.getElementById('dashboardToast');
+        const toastBody = toast.querySelector('.toast-body');
+        const toastTitle = toast.querySelector('.toast-header strong');
+        
+        toastBody.textContent = message;
+        toastTitle.textContent = title;
+        
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+    }
+
+    // Add event listeners for share and copy buttons
+    const shareCardBtns = document.querySelectorAll('.share-card-btn');
+    shareCardBtns.forEach(function (shareCardBtn) {
+        shareCardBtn.addEventListener('click', function () {
+            const cardUuid = this.getAttribute('data-card-uuid');
+            shareCard(cardUuid);
+            showToast('Card shared successfully!', 'Shared');
+        });
+    });
+
+    // Confirmation for delete
+    function confirmDelete(deleteUrl) {
+        if (confirm('Are you sure you want to delete this card?')) {
+            window.location.href = deleteUrl;
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'cards/base.html' %}
+
+{% block title %}Delete Business Card - Digital Business Card{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h1 class="h4 mb-0">Delete Business Card</h1>
+            </div>
+            <div class="card-body">
+                <p class="mb-4">
+                    Are you sure you want to delete the business card for 
+                    {% if card.employee %}
+                        "{{ card.employee.name }}" from {{ card.employee.company.name }}?
+                    {% else %}
+                        "{{ card.individual_client.name }}"?
+                    {% endif %}
+                </p>
+                
+                <p class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    Warning: This will permanently delete the business card and all its analytics data!
+                </p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'card_list' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
