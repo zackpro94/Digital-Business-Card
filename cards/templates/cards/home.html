@@ -1,149 +1,445 @@
 {% extends 'cards/base.html' %}
+{% load static %}
 
-{% block title %}Home - Digital Business Card{% endblock %}
+{% block title %}Digital Business Card - Modern Networking Solution{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Core Styles */
+    :root {
+        --primary: #4361ee;
+        --primary-dark: #3a56d4;
+        --secondary: #6c757d;
+        --success: #28a745;
+        --info: #17a2b8;
+        --warning: #ffc107;
+        --danger: #dc3545;
+        --light: #f8f9fa;
+        --dark: #343a40;
+        --white: #ffffff;
+        --gradient-primary: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
+    }
+
+    section {
+        padding: 80px 0;
+        position: relative;
+    }
+
+    .section-title {
+        margin-bottom: 50px;
+        text-align: center;
+    }
+
+    .section-title h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        position: relative;
+    }
+
+    .section-title p {
+        font-size: 1.1rem;
+        color: var(--secondary);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .hero {
+        background: var(--gradient-primary);
+        color: white;
+        padding: 120px 0 80px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .hero-shape {
+        position: absolute;
+        opacity: 0.1;
+        border-radius: 50%;
+    }
+
+    .hero-shape-1 {
+        width: 500px;
+        height: 500px;
+        background: white;
+        top: -250px;
+        right: -250px;
+    }
+
+    .hero-shape-2 {
+        width: 300px;
+        height: 300px;
+        background: white;
+        bottom: -150px;
+        left: -150px;
+    }
+
+    .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 24px;
+    }
+
+    .hero p {
+        font-size: 1.25rem;
+        opacity: 0.9;
+        margin-bottom: 32px;
+        max-width: 500px;
+    }
+
+    .btn-hero {
+        padding: 12px 32px;
+        font-weight: 600;
+        border-radius: 50px;
+        margin-right: 16px;
+        transition: all 0.3s;
+    }
+
+    .btn-hero-light {
+        background: white;
+        color: var(--primary);
+    }
+
+    .btn-hero-light:hover {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--primary-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-hero-outline {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    .btn-hero-outline:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-image {
+        position: relative;
+        z-index: 1;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+    }
+
+    .hero-card {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Features Section Styles */
+    .features {
+        background-color: #f8f9fc;
+        padding: 100px 0;
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: 16px;
+        padding: 40px 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        height: 100%;
+        transition: all 0.3s;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 16px;
+        font-weight: 700;
+    }
+
+    .feature-card p {
+        color: var(--secondary);
+        margin-bottom: 0;
+    }
+
+    /* How It Works Section */
+    .step-card {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        height: 100%;
+        position: relative;
+        z-index: 1;
+    }
+
+    .step-number {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+    }
+
+    .step-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .step-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 16px;
+        font-weight: 700;
+    }
+
+    .step-card p {
+        color: var(--secondary);
+        margin-bottom: 0;
+    }
+
+    /* Testimonials Section */
+    .testimonials {
+        background-color: white;
+    }
+
+    .testimonial-card {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        margin: 20px 15px;
+        position: relative;
+    }
+
+    .testimonial-text {
+        margin-bottom: 24px;
+        font-size: 1.1rem;
+        color: var(--dark);
+        font-style: italic;
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+    }
+
+    .testimonial-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 16px;
+        object-fit: cover;
+    }
+
+    .testimonial-info h4 {
+        margin-bottom: 4px;
+        font-size: 1.1rem;
+    }
+
+    .testimonial-info p {
+        color: var(--secondary);
+        margin: 0;
+    }
+
+    .testimonial-rating {
+        color: #ffc107;
+        margin-top: 8px;
+    }
+
+    /* Contact Form Styles */
+    .contact {
+        background-color: #f8f9fc;
+    }
+
+    .contact-form {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        padding: 40px;
+    }
+
+    .contact-form h3 {
+        font-size: 1.75rem;
+        margin-bottom: 24px;
+        font-weight: 700;
+    }
+
+    .form-control {
+        height: 50px;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: var(--primary);
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: var(--dark);
+    }
+
+    .btn-submit {
+        background: var(--gradient-primary);
+        color: white;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s;
+    }
+
+    .btn-submit:hover {
+        box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        transform: translateY(-3px);
+    }
+
+    /* CTA Section */
+    .cta {
+        background: var(--gradient-primary);
+        color: white;
+        padding: 80px 0;
+    }
+
+    .cta h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
+
+    .cta p {
+        font-size: 1.1rem;
+        margin-bottom: 32px;
+        opacity: 0.9;
+    }
+
+    .form-check-input {
+        width: 20px;
+        height: 20px;
+        margin-top: 0.25rem;
+    }
+
+    .form-check-label {
+        font-size: 0.95rem;
+    }
+
+    /* Card Type Radio Buttons */
+    .card-type-container {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .card-type-option {
+        flex: 1;
+        position: relative;
+    }
+
+    .card-type-input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .card-type-label {
+        display: block;
+        background: #f8f9fc;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .card-type-input:checked + .card-type-label {
+        background: rgba(67, 97, 238, 0.1);
+        border-color: var(--primary);
+    }
+
+    .card-type-label .card-type-icon {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 10px;
+    }
+
+    .card-type-label h4 {
+        margin-bottom: 5px;
+        font-size: 1.1rem;
+    }
+
+    .card-type-label p {
+        color: var(--secondary);
+        font-size: 0.9rem;
+        margin: 0;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<!-- Hero Section with Animated Gradient Background -->
-<section class="hero-section position-relative overflow-hidden">
-    <div class="animated-gradient-bg"></div>
-    <div class="container position-relative py-6">
-        <div class="row align-items-center">
-            <div class="col-lg-6" data-aos="fade-up">
-                <span class="badge bg-primary-subtle text-primary fs-6 mb-3">The Modern Way to Network</span>
-                <h1 class="display-3 fw-bold mb-4 text-gradient">Your Digital Identity, <span class="d-block">Reimagined</span></h1>
-                <p class="lead mb-4 text-secondary">Create a stunning digital business card that showcases your professional brand. Share instantly, track engagement, and make a lasting impression.</p>
-                <div class="d-flex flex-wrap gap-3 mb-5">
-                    {% if user.is_authenticated %}
-                    <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg btn-glow"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
-                    {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg btn-glow"><i class="fas fa-sign-in-alt me-2"></i> Get Started</a>
-                    {% endif %}
-                    <a href="#how-it-works" class="btn btn-outline-secondary btn-lg"><i class="fas fa-info-circle me-2"></i> Learn More</a>
-                </div>
-                
-                <!-- Trust Badges -->
-                <div class="d-flex flex-wrap align-items-center gap-4 mt-5 trust-badges">
-                    <div class="d-flex align-items-center">
-                        <div class="icon-badge bg-success-subtle text-success me-2">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <span>No-Code Setup</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="icon-badge bg-success-subtle text-success me-2">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <span>Easy to Share</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="icon-badge bg-success-subtle text-success me-2">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <span>Real-time Analytics</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 position-relative" data-aos="fade-left" data-aos-delay="200">
-                <!-- 3D Card Preview -->
-                <div class="card-3d-wrapper">
-                    <div class="card-3d-element card-light">
-                        <div class="card-preview modern-style">
-                            <div class="card-preview-header" style="background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);">
-                                <div class="profile-img-container">
-                                    <div class="profile-img">
-                                        <span>J</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-preview-body">
-                                <h3 class="preview-name">John Doe</h3>
-                                <p class="preview-title">Marketing Director</p>
-                                <p class="preview-company">Acme Inc.</p>
-                                <div class="preview-contact">
-                                    <div><i class="fas fa-envelope"></i> john@example.com</div>
-                                    <div><i class="fas fa-phone"></i> (555) 123-4567</div>
-                                </div>
-                                <div class="preview-social">
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-3d-element card-dark" style="transform: rotate(8deg) translateZ(-50px) translateX(30px);">
-                        <div class="card-preview elegant-style">
-                            <div class="card-preview-header" style="background: linear-gradient(45deg, #333 0%, #111 100%);">
-                                <div class="profile-img-container">
-                                    <div class="profile-img">
-                                        <span>S</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-preview-body">
-                                <h3 class="preview-name">Sarah Smith</h3>
-                                <p class="preview-title">UX Designer</p>
-                                <p class="preview-company">Design Co.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Floating Elements -->
-                <div class="floating-element-1"></div>
-                <div class="floating-element-2"></div>
-                <div class="floating-element-3"></div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Wave Separator -->
-    <div class="wave-separator">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 160">
-            <path class="wave-path" fill-opacity="1" d="M0,128L48,117.3C96,107,192,85,288,90.7C384,96,480,128,576,138.7C672,149,768,139,864,122.7C960,107,1056,85,1152,80C1248,75,1344,85,1392,90.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-        </svg>
-    </div>
-</section>
-
-<!-- Stats Section -->
-<section class="stats-section py-5">
+<!-- Hero Section -->
+<section class="hero" id="hero">
+    <div class="hero-shape hero-shape-1"></div>
+    <div class="hero-shape hero-shape-2"></div>
     <div class="container">
-        <div class="row g-4 text-center">
-            <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                <div class="stat-card">
-                    <div class="stat-icon mb-3">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3 class="stat-number"><span class="counter">5,000</span>+</h3>
-                    <p class="stat-label">Professionals</p>
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h1>Modern Networking with Digital Business Cards</h1>
+                <p>Share your professional details instantly and leave a lasting impression with our premium digital business cards.</p>
+                <div class="hero-buttons">
+                    <a href="{% url 'login' %}" class="btn btn-hero btn-hero-light">
+                        <i class="fas fa-user-plus me-2"></i>Get Started
+                    </a>
+                    <a href="#features" class="btn btn-hero btn-hero-outline">
+                        <i class="fas fa-info-circle me-2"></i>Learn More
+                    </a>
                 </div>
             </div>
-            <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                <div class="stat-card">
-                    <div class="stat-icon mb-3">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <h3 class="stat-number"><span class="counter">250</span>+</h3>
-                    <p class="stat-label">Companies</p>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-                <div class="stat-card">
-                    <div class="stat-icon mb-3">
-                        <i class="fas fa-share-alt"></i>
-                    </div>
-                    <h3 class="stat-number"><span class="counter">100</span>K+</h3>
-                    <p class="stat-label">Card Shares</p>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-                <div class="stat-card">
-                    <div class="stat-icon mb-3">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3 class="stat-number"><span class="counter">30</span>+</h3>
-                    <p class="stat-label">Countries</p>
+            <div class="col-lg-6">
+                <div class="hero-image text-center">
+                    <img src="https://cdn.pixabay.com/photo/2018/03/10/09/45/businessman-3213659_1280.jpg" alt="Digital Business Card" class="img-fluid hero-card">
                 </div>
             </div>
         </div>
@@ -151,86 +447,65 @@
 </section>
 
 <!-- Features Section -->
-<section class="features-section py-6 bg-light">
+<section class="features" id="features">
     <div class="container">
-        <div class="row mb-5">
-            <div class="col-lg-6 mx-auto text-center" data-aos="fade-up">
-                <span class="badge bg-primary-subtle text-primary fs-6 mb-3">Why Choose Us</span>
-                <h2 class="display-5 fw-bold mb-3">Powerful Features for Modern Networking</h2>
-                <p class="lead text-secondary">Say goodbye to traditional paper cards and embrace the future of professional connections.</p>
-            </div>
+        <div class="section-title">
+            <h2>Why Choose Digital Business Cards</h2>
+            <p>Our digital business cards provide unmatched benefits for modern professionals</p>
         </div>
-        
         <div class="row g-4">
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-card h-100 p-4 rounded shadow-hover">
-                    <div class="feature-icon mb-4">
-                        <div class="feature-icon-bg">
-                            <i class="fas fa-leaf"></i>
-                        </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-globe"></i>
                     </div>
-                    <h3 class="h4 fw-bold">Eco-Friendly</h3>
-                    <p class="text-secondary mb-0">Reduce your carbon footprint with paperless digital cards while making a modern, responsible impression on your network.</p>
+                    <h3>Eco-Friendly</h3>
+                    <p>Eliminate paper waste and reduce your carbon footprint with our digital business cards.</p>
                 </div>
             </div>
-            
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-card h-100 p-4 rounded shadow-hover">
-                    <div class="feature-icon mb-4">
-                        <div class="feature-icon-bg">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-edit"></i>
                     </div>
-                    <h3 class="h4 fw-bold">Advanced Analytics</h3>
-                    <p class="text-secondary mb-0">Track views, shares, and engagement to understand how your card performs and optimize your networking strategy.</p>
+                    <h3>Easy Updates</h3>
+                    <p>Change your information instantly without reprinting physical cards.</p>
                 </div>
             </div>
-            
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-card h-100 p-4 rounded shadow-hover">
-                    <div class="feature-icon mb-4">
-                        <div class="feature-icon-bg">
-                            <i class="fas fa-sync-alt"></i>
-                        </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-share-alt"></i>
                     </div>
-                    <h3 class="h4 fw-bold">Always Updated</h3>
-                    <p class="text-secondary mb-0">Update your information anytime without reprinting cards. Your contacts always see your latest details in real-time.</p>
+                    <h3>Instant Sharing</h3>
+                    <p>Share your card via link, QR code, or social media with a single click.</p>
                 </div>
             </div>
-            
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
-                <div class="feature-card h-100 p-4 rounded shadow-hover">
-                    <div class="feature-icon mb-4">
-                        <div class="feature-icon-bg">
-                            <i class="fas fa-qrcode"></i>
-                        </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3 class="h4 fw-bold">Instant Sharing</h3>
-                    <p class="text-secondary mb-0">Share your digital card with a QR code or direct link. Allow recipients to save your details with a single tap.</p>
+                    <h3>Analytics</h3>
+                    <p>Track when and how often your card is viewed to measure networking effectiveness.</p>
                 </div>
             </div>
-            
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
-                <div class="feature-card h-100 p-4 rounded shadow-hover">
-                    <div class="feature-icon mb-4">
-                        <div class="feature-icon-bg">
-                            <i class="fas fa-paint-brush"></i>
-                        </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-palette"></i>
                     </div>
-                    <h3 class="h4 fw-bold">Multiple Designs</h3>
-                    <p class="text-secondary mb-0">Choose from elegant, modern, or custom templates that match your personal brand and professional style.</p>
+                    <h3>Customizable</h3>
+                    <p>Choose from various themes and designs to match your personal brand.</p>
                 </div>
             </div>
-            
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
-                <div class="feature-card h-100 p-4 rounded shadow-hover">
-                    <div class="feature-icon mb-4">
-                        <div class="feature-icon-bg">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-link"></i>
                     </div>
-                    <h3 class="h4 fw-bold">Secure & Private</h3>
-                    <p class="text-secondary mb-0">Control who sees your information with privacy settings. Your data is encrypted and secure at all times.</p>
+                    <h3>Interactive</h3>
+                    <p>Include clickable links to your website, portfolio, and social media profiles.</p>
                 </div>
             </div>
         </div>
@@ -238,206 +513,123 @@
 </section>
 
 <!-- How It Works Section -->
-<section id="how-it-works" class="how-it-works-section py-6 position-relative">
+<section class="how-it-works" id="how-it-works">
     <div class="container">
-        <div class="row mb-5">
-            <div class="col-lg-6 mx-auto text-center" data-aos="fade-up">
-                <span class="badge bg-primary-subtle text-primary fs-6 mb-3">Simple Process</span>
-                <h2 class="display-5 fw-bold mb-3">How Digital Business Cards Work</h2>
-                <p class="lead text-secondary">Getting started is easy and takes only minutes. Follow these simple steps.</p>
-            </div>
+        <div class="section-title">
+            <h2>How It Works</h2>
+            <p>Creating and sharing your digital business card is simple and takes just minutes</p>
         </div>
-        
-        <div class="timeline position-relative">
-            <!-- Step 1 -->
-            <div class="timeline-item" data-aos="fade-up">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content card border-0 shadow-sm">
-                    <div class="row g-0 align-items-center">
-                        <div class="col-lg-6">
-                            <div class="p-4 p-lg-5">
-                                <div class="step-number mb-3">01</div>
-                                <h3 class="h3 fw-bold mb-3">Create Your Account</h3>
-                                <p class="mb-0 text-secondary">Register for a free account in seconds. No credit card required to get started.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 d-none d-lg-block">
-                            <div class="p-4 text-center">
-                                <img src="https://via.placeholder.com/300x200" alt="Create Account" class="img-fluid rounded-3">
-                            </div>
-                        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-3">
+                <div class="step-card text-center">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-user-plus"></i>
                     </div>
+                    <h3>Create Account</h3>
+                    <p>Sign up for a free account to get started with your digital business card.</p>
                 </div>
             </div>
-            
-            <!-- Step 2 -->
-            <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content card border-0 shadow-sm">
-                    <div class="row g-0 align-items-center">
-                        <div class="col-lg-6 order-lg-2">
-                            <div class="p-4 p-lg-5">
-                                <div class="step-number mb-3">02</div>
-                                <h3 class="h3 fw-bold mb-3">Customize Your Card</h3>
-                                <p class="mb-0 text-secondary">Add your information, upload a profile photo, customize colors and choose a template.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 order-lg-1 d-none d-lg-block">
-                            <div class="p-4 text-center">
-                                <img src="https://via.placeholder.com/300x200" alt="Customize Card" class="img-fluid rounded-3">
-                            </div>
-                        </div>
+            <div class="col-md-3">
+                <div class="step-card text-center">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-edit"></i>
                     </div>
+                    <h3>Add Information</h3>
+                    <p>Enter your contact details, upload profile picture, and add social links.</p>
                 </div>
             </div>
-            
-            <!-- Step 3 -->
-            <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content card border-0 shadow-sm">
-                    <div class="row g-0 align-items-center">
-                        <div class="col-lg-6">
-                            <div class="p-4 p-lg-5">
-                                <div class="step-number mb-3">03</div>
-                                <h3 class="h3 fw-bold mb-3">Share Your Card</h3>
-                                <p class="mb-0 text-secondary">Share your card via QR code, direct link, email, or social media with a single click.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 d-none d-lg-block">
-                            <div class="p-4 text-center">
-                                <img src="https://via.placeholder.com/300x200" alt="Share Card" class="img-fluid rounded-3">
-                            </div>
-                        </div>
+            <div class="col-md-3">
+                <div class="step-card text-center">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-palette"></i>
                     </div>
+                    <h3>Customize Design</h3>
+                    <p>Choose a theme and customize your card to match your personal brand.</p>
                 </div>
             </div>
-            
-            <!-- Step 4 -->
-            <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
-                <div class="timeline-marker"></div>
-                <div class="timeline-content card border-0 shadow-sm">
-                    <div class="row g-0 align-items-center">
-                        <div class="col-lg-6 order-lg-2">
-                            <div class="p-4 p-lg-5">
-                                <div class="step-number mb-3">04</div>
-                                <h3 class="h3 fw-bold mb-3">Track & Manage</h3>
-                                <p class="mb-0 text-secondary">Monitor views and engagement, make updates anytime, and grow your network.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 order-lg-1 d-none d-lg-block">
-                            <div class="p-4 text-center">
-                                <img src="https://via.placeholder.com/300x200" alt="Track Engagement" class="img-fluid rounded-3">
-                            </div>
-                        </div>
+            <div class="col-md-3">
+                <div class="step-card text-center">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-share-alt"></i>
                     </div>
+                    <h3>Share Card</h3>
+                    <p>Share your digital business card via link, QR code, or social media.</p>
                 </div>
             </div>
-        </div>
-        
-        <div class="text-center mt-5" data-aos="fade-up">
-            <a href="{% url 'login' %}" class="btn btn-primary btn-lg btn-glow px-5">
-                <i class="fas fa-user-plus me-2"></i> Register Now
-            </a>
         </div>
     </div>
 </section>
 
 <!-- Testimonials Section -->
-<section class="testimonials-section py-6 bg-light">
+<section class="testimonials" id="testimonials">
     <div class="container">
-        <div class="row mb-5">
-            <div class="col-lg-6 mx-auto text-center" data-aos="fade-up">
-                <span class="badge bg-primary-subtle text-primary fs-6 mb-3">Customer Stories</span>
-                <h2 class="display-5 fw-bold mb-3">What Our Users Say</h2>
-                <p class="lead text-secondary">Join thousands of satisfied professionals who have transformed their networking experience.</p>
-            </div>
+        <div class="section-title">
+            <h2>What Our Users Say</h2>
+            <p>Join thousands of satisfied professionals using our digital business cards</p>
         </div>
-        
-        <div class="row">
-            <div class="col-12" data-aos="fade-up">
-                <div class="testimonial-slider position-relative">
-                    <div class="row g-4">
-                        <!-- Testimonial 1 -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="testimonial-card h-100 p-4 rounded shadow-sm">
-                                <div class="d-flex align-items-center mb-4">
-                                    <div class="testimonial-avatar">
-                                        <div class="avatar-placeholder">
-                                            <span>M</span>
-                                        </div>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h5 class="mb-0">Michael Thompson</h5>
-                                        <p class="mb-0 text-secondary">Sales Director</p>
-                                    </div>
-                                </div>
-                                <div class="testimonial-quote mb-3">
-                                    <i class="fas fa-quote-left fa-2x text-primary-subtle"></i>
-                                </div>
-                                <p class="testimonial-text">"Since switching to digital business cards, my networking efficiency has increased by 200%. I've received numerous compliments on the professional design, and tracking features help me follow up at the right time."</p>
-                                <div class="testimonial-rating text-warning">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "I love how easy it is to update my information and share my digital card. It's saved me time and made a great impression on clients."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" class="testimonial-avatar" alt="Sarah Johnson">
+                        <div class="testimonial-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Marketing Manager</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                             </div>
                         </div>
-                        
-                        <!-- Testimonial 2 -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="testimonial-card h-100 p-4 rounded shadow-sm">
-                                <div class="d-flex align-items-center mb-4">
-                                    <div class="testimonial-avatar">
-                                        <div class="avatar-placeholder">
-                                            <span>J</span>
-                                        </div>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h5 class="mb-0">Jessica Williams</h5>
-                                        <p class="mb-0 text-secondary">Marketing Consultant</p>
-                                    </div>
-                                </div>
-                                <div class="testimonial-quote mb-3">
-                                    <i class="fas fa-quote-left fa-2x text-primary-subtle"></i>
-                                </div>
-                                <p class="testimonial-text">"The ability to update my card in real-time has been a game-changer. No more outdated information or wasted paper cards. My clients appreciate the eco-friendly approach, and I love the sleek, professional look."</p>
-                                <div class="testimonial-rating text-warning">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "As a sales representative, I need to make a strong first impression. This digital business card has been a game-changer for my networking."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="testimonial-avatar" alt="David Wilson">
+                        <div class="testimonial-info">
+                            <h4>David Wilson</h4>
+                            <p>Sales Representative</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                             </div>
                         </div>
-                        
-                        <!-- Testimonial 3 -->
-                        <div class="col-md-6 col-lg-4">
-                            <div class="testimonial-card h-100 p-4 rounded shadow-sm">
-                                <div class="d-flex align-items-center mb-4">
-                                    <div class="testimonial-avatar">
-                                        <div class="avatar-placeholder">
-                                            <span>D</span>
-                                        </div>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h5 class="mb-0">David Chen</h5>
-                                        <p class="mb-0 text-secondary">Tech Entrepreneur</p>
-                                    </div>
-                                </div>
-                                <div class="testimonial-quote mb-3">
-                                    <i class="fas fa-quote-left fa-2x text-primary-subtle"></i>
-                                </div>
-                                <p class="testimonial-text">"As someone who attends numerous tech conferences, having a digital business card has been revolutionary. The QR code sharing feature makes connecting with new contacts effortless and memorable."</p>
-                                <div class="testimonial-rating text-warning">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Our company switched to digital business cards for our entire team. It's eco-friendly and the analytics feature is incredibly useful."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" class="testimonial-avatar" alt="Emily Chen">
+                        <div class="testimonial-info">
+                            <h4>Emily Chen</h4>
+                            <p>HR Director</p>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
                             </div>
                         </div>
                     </div>
@@ -448,809 +640,186 @@
 </section>
 
 <!-- Contact Section -->
-<section id="contact" class="contact-section py-6 position-relative">
+<section class="contact" id="contact">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-5 mb-5 mb-lg-0" data-aos="fade-up">
-                <span class="badge bg-primary-subtle text-primary fs-6 mb-3">Get in Touch</span>
-                <h2 class="display-5 fw-bold mb-4">Ready for Your Digital Business Card?</h2>
-                <p class="lead text-secondary mb-4">Fill out the form and our team will get in touch to discuss your needs and create the perfect digital business card for you.</p>
-                
-                <div class="contact-info">
-                    <div class="contact-item d-flex align-items-center mb-4">
-                        <div class="contact-icon me-3">
-                            <i class="fas fa-map-marker-alt"></i>
+        <div class="section-title">
+            <h2>Contact Us</h2>
+            <p>Have questions? We're here to help! Fill out the form below and we'll get back to you.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="contact-info mb-4 mb-lg-0">
+                    <h3>Ready to transform your networking?</h3>
+                    <p class="mb-4">Let us help you create the perfect digital business card for your needs. Our team is standing by to answer your questions.</p>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="me-3 text-primary">
+                            <i class="fas fa-envelope fa-2x"></i>
                         </div>
                         <div>
-                            <h5 class="mb-1">Our Location</h5>
-                            <p class="mb-0 text-secondary">123 Business Street, Tech City, CA 94123</p>
+                            <h5>Email Us</h5>
+                            <p class="mb-0">info@digitalbusinesscard.com</p>
                         </div>
                     </div>
-                    
-                    <div class="contact-item d-flex align-items-center mb-4">
-                        <div class="contact-icon me-3">
-                            <i class="fas fa-envelope"></i>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="me-3 text-primary">
+                            <i class="fas fa-phone fa-2x"></i>
                         </div>
                         <div>
-                            <h5 class="mb-1">Email Us</h5>
-                            <p class="mb-0 text-secondary">support@digitalbusinesscard.com</p>
+                            <h5>Call Us</h5>
+                            <p class="mb-0">+1 (555) 123-4567</p>
                         </div>
                     </div>
-                    
-                    <div class="contact-item d-flex align-items-center">
-                        <div class="contact-icon me-3">
-                            <i class="fas fa-phone-alt"></i>
+                    <div class="d-flex align-items-center">
+                        <div class="me-3 text-primary">
+                            <i class="fas fa-map-marker-alt fa-2x"></i>
                         </div>
                         <div>
-                            <h5 class="mb-1">Call Us</h5>
-                            <p class="mb-0 text-secondary">(123) 456-7890</p>
+                            <h5>Visit Us</h5>
+                            <p class="mb-0">123 Business Ave, Suite 100<br>San Francisco, CA 94107</p>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
-                <div class="contact-form-wrapper p-4 p-lg-5 bg-white rounded-4 shadow">
-                    {% if messages %}
-                    <div class="messages mb-4">
-                        {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    
-                    <form method="post" class="contact-form needs-validation" novalidate>
+            <div class="col-lg-6">
+                <div class="contact-form">
+                    <form method="post">
                         {% csrf_token %}
-                        
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    {{ form.name }}
-                                    <label for="{{ form.name.id_for_label }}">Your Name*</label>
-                                    <div class="invalid-feedback">
-                                        Please enter your name.
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    {{ form.email }}
-                                    <label for="{{ form.email.id_for_label }}">Your Email*</label>
-                                    <div class="invalid-feedback">
-                                        Please enter a valid email.
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    {{ form.phone }}
-                                    <label for="{{ form.phone.id_for_label }}">Phone Number</label>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    {{ form.company_name }}
-                                    <label for="{{ form.company_name.id_for_label }}">Company Name</label>
-                                </div>
-                            </div>
-                            
-                            <div class="col-12">
-                                <div class="form-floating mb-3">
-                                    {{ form.message }}
-                                    <label for="{{ form.message.id_for_label }}">Your Message*</label>
-                                    <div class="invalid-feedback">
-                                        Please enter your message.
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-12">
-                                <div class="card-type-selector mb-3">
-                                    <label class="form-label fw-bold">Card Type*</label>
-                                    <div class="row g-3">
-                                        {% for radio in form.card_type %}
-                                        <div class="col-md-4">
-                                            <div class="form-check card-type-option">
-                                                {{ radio.tag }}
-                                                <label class="form-check-label" for="{{ radio.id_for_label }}">
-                                                    {{ radio.choice_label }}
-                                                </label>
-                                            </div>
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">Your Name</label>
+                            {{ form.name }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">Email Address</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.phone.id_for_label }}" class="form-label">Phone Number (Optional)</label>
+                            {{ form.phone }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.company_name.id_for_label }}" class="form-label">Company Name (Optional)</label>
+                            {{ form.company_name }}
+                        </div>
+                        <div class="mb-4">
+                            <label>What type of business card do you need?</label>
+                            <div class="card-type-container">
+                                <div class="card-type-option">
+                                    <input type="radio" name="card_type" id="individual" value="individual" class="card-type-input" checked>
+                                    <label for="individual" class="card-type-label">
+                                        <div class="card-type-icon">
+                                            <i class="fas fa-user"></i>
                                         </div>
-                                        {% endfor %}
-                                    </div>
+                                        <h4>Individual</h4>
+                                        <p>For personal use</p>
+                                    </label>
                                 </div>
-                            </div>
-                            
-                            <div class="col-12">
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-primary btn-lg px-5">
-                                        <i class="fas fa-paper-plane me-2"></i> Send Message
-                                    </button>
+                                <div class="card-type-option">
+                                    <input type="radio" name="card_type" id="company" value="company" class="card-type-input">
+                                    <label for="company" class="card-type-label">
+                                        <div class="card-type-icon">
+                                            <i class="fas fa-building"></i>
+                                        </div>
+                                        <h4>Company</h4>
+                                        <p>For teams & businesses</p>
+                                    </label>
                                 </div>
                             </div>
                         </div>
+                        <div class="mb-4">
+                            <label for="{{ form.message.id_for_label }}" class="form-label">Your Message</label>
+                            {{ form.message }}
+                        </div>
+                        <button type="submit" class="btn btn-submit w-100">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Decorative Elements -->
-    <div class="decorative-element-1"></div>
-    <div class="decorative-element-2"></div>
 </section>
 
-<!-- Call to Action Section -->
-<section class="cta-section text-center text-white py-6 position-relative overflow-hidden">
-    <div class="cta-bg-overlay"></div>
-    <div class="container position-relative">
+<!-- CTA Section -->
+<section class="cta" id="cta">
+    <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-8" data-aos="fade-up">
-                <h2 class="display-4 fw-bold mb-4">Ready to Transform Your Networking?</h2>
-                <p class="lead mb-5">Join thousands of professionals who have upgraded to digital business cards.</p>
-                <a href="{% url 'login' %}" class="btn btn-light btn-lg px-5 me-3">
-                    <i class="fas fa-user-plus me-2"></i> Sign Up Free
+            <div class="col-lg-8 text-center">
+                <h2>Ready to Transform Your Networking?</h2>
+                <p>Join thousands of professionals who have upgraded to digital business cards.</p>
+                <a href="{% url 'login' %}" class="btn btn-hero btn-hero-light me-3 mb-3 mb-md-0">
+                    <i class="fas fa-user-plus me-2"></i>Sign Up Free
                 </a>
-                <a href="#contact" class="btn btn-outline-light btn-lg px-5">
-                    <i class="fas fa-info-circle me-2"></i> Learn More
+                <a href="#contact" class="btn btn-hero btn-hero-outline">
+                    <i class="fas fa-info-circle me-2"></i>Learn More
                 </a>
             </div>
         </div>
     </div>
 </section>
-
-{% endblock %}
-
-{% block extra_css %}
-<style>
-    /* Hero section styles */
-    .hero-section {
-        position: relative;
-        overflow: hidden;
-        padding: 6rem 0;
-        background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,242,247,0.9) 100%);
-    }
-    
-    /* Business card preview */
-    .business-card {
-        width: 320px;
-        height: 500px;
-        background: white;
-        border-radius: 16px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-        overflow: hidden;
-        position: relative;
-    }
-    
-    .business-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    }
-    
-    .profile-img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-    }
-    
-    .company-name {
-        font-weight: 600;
-        color: #555;
-        margin-bottom: 15px;
-    }
-    
-    .social-links a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background-color: #f8f9fa;
-        color: #495057;
-        margin: 0 5px;
-        transition: all 0.3s ease;
-    }
-    
-    .social-links a:hover {
-        background-color: #007bff;
-        color: white;
-        transform: translateY(-3px);
-    }
-    
-    /* Wave divider */
-    .wave-divider {
-        position: relative;
-        height: 100px;
-        margin-top: -100px;
-    }
-    
-    /* Feature cards */
-    .feature-card {
-        background: white;
-        transition: all 0.3s ease;
-    }
-    
-    .feature-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
-    
-    .feature-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background-color: rgba(0,123,255,0.1);
-        color: #007bff;
-    }
-    
-    /* Floating animation */
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-15px); }
-        100% { transform: translateY(0px); }
-    }
-    
-    .floating-element {
-        animation: float 6s ease-in-out infinite;
-    }
-    
-    /* Hero Section with Animated Gradient Background */
-    .hero-section {
-        position: relative;
-        overflow: hidden;
-        padding: 6rem 0;
-        background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,242,247,0.9) 100%);
-    }
-    
-    .animated-gradient-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-        background-size: 400% 400%;
-        animation: gradient 10s ease infinite;
-    }
-    
-    @keyframes gradient {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
-    /* 3D Card Preview */
-    .card-3d-wrapper {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        perspective: 1000px;
-    }
-    
-    .card-3d-element {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        transform-style: preserve-3d;
-        transition: transform 0.5s ease;
-    }
-    
-    .card-light {
-        background: linear-gradient(45deg, #fff 0%, #f8f9fa 100%);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-    
-    .card-dark {
-        background: linear-gradient(45deg, #333 0%, #111 100%);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    
-    .card-preview {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        border-radius: 16px;
-        overflow: hidden;
-    }
-    
-    .card-preview-header {
-        position: relative;
-        width: 100%;
-        height: 150px;
-        background-size: cover;
-        background-position: center;
-        border-radius: 16px 16px 0 0;
-    }
-    
-    .profile-img-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .profile-img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background: #007bff;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 36px;
-    }
-    
-    .card-preview-body {
-        position: relative;
-        width: 100%;
-        height: calc(100% - 150px);
-        padding: 30px;
-        background: white;
-        border-radius: 0 0 16px 16px;
-    }
-    
-    .preview-name {
-        font-weight: 600;
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
-    
-    .preview-title {
-        font-weight: 400;
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
-    
-    .preview-company {
-        font-weight: 400;
-        font-size: 16px;
-        margin-bottom: 20px;
-    }
-    
-    .preview-contact {
-        font-weight: 400;
-        font-size: 16px;
-        margin-bottom: 20px;
-    }
-    
-    .preview-social {
-        font-weight: 400;
-        font-size: 16px;
-    }
-    
-    .preview-social a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background-color: #f8f9fa;
-        color: #495057;
-        margin: 0 5px;
-        transition: all 0.3s ease;
-    }
-    
-    .preview-social a:hover {
-        background-color: #007bff;
-        color: white;
-        transform: translateY(-3px);
-    }
-    
-    /* Wave Separator */
-    .wave-separator {
-        position: relative;
-        height: 160px;
-        margin-top: -160px;
-    }
-    
-    .wave-path {
-        fill: #f8f9fa;
-        fill-opacity: 1;
-    }
-    
-    /* Stats Section */
-    .stats-section {
-        background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,242,247,0.9) 100%);
-    }
-    
-    .stat-card {
-        background: white;
-        border-radius: 16px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-    }
-    
-    .stat-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background-color: rgba(0,123,255,0.1);
-        color: #007bff;
-    }
-    
-    .stat-number {
-        font-weight: 600;
-        font-size: 36px;
-        margin-bottom: 10px;
-    }
-    
-    .stat-label {
-        font-weight: 400;
-        font-size: 18px;
-    }
-    
-    /* Features Section */
-    .features-section {
-        background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,242,247,0.9) 100%);
-    }
-    
-    .feature-card {
-        background: white;
-        border-radius: 16px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-    }
-    
-    .feature-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background-color: rgba(0,123,255,0.1);
-        color: #007bff;
-    }
-    
-    .feature-icon-bg {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background-color: rgba(0,123,255,0.1);
-        color: #007bff;
-    }
-    
-    .feature-icon-bg i {
-        font-size: 24px;
-    }
-    
-    .feature-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    }
-    
-    /* How It Works Timeline Section */
-    .how-it-works-section {
-        position: relative;
-        background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,242,247,0.9) 100%);
-    }
-    
-    .timeline {
-        position: relative;
-        padding: 2rem 0;
-    }
-    
-    .timeline::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 2px;
-        height: 100%;
-        background: linear-gradient(to bottom, transparent, rgba(0,123,255,0.4), transparent);
-    }
-    
-    .timeline-item {
-        position: relative;
-        margin-bottom: 3rem;
-    }
-    
-    .timeline-marker {
-        position: absolute;
-        top: 2rem;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #007bff;
-        z-index: 1;
-        box-shadow: 0 0 0 6px rgba(0,123,255,0.2);
-    }
-    
-    .timeline-content {
-        position: relative;
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-        overflow: hidden;
-        border-radius: 16px;
-    }
-    
-    .step-number {
-        font-size: 3rem;
-        font-weight: 800;
-        line-height: 1;
-        color: rgba(0,123,255,0.2);
-    }
-    
-    /* Testimonials Section */
-    .testimonials-section {
-        background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,242,247,0.9) 100%);
-    }
-    
-    .testimonial-card {
-        background: white;
-        border-radius: 16px;
-        transition: all 0.3s ease;
-    }
-    
-    .testimonial-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    }
-    
-    .testimonial-avatar {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        overflow: hidden;
-        background: #007bff;
-    }
-    
-    .avatar-placeholder {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        font-weight: 600;
-        color: white;
-    }
-    
-    .testimonial-quote {
-        color: rgba(0,123,255,0.2);
-    }
-    
-    /* Contact Section */
-    .contact-section {
-        position: relative;
-        background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,242,247,0.9) 100%);
-    }
-    
-    .contact-form-wrapper {
-        border-radius: 16px;
-        overflow: hidden;
-        transition: all 0.3s ease;
-    }
-    
-    .contact-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: rgba(0,123,255,0.1);
-        color: #007bff;
-        font-size: 18px;
-    }
-    
-    .form-floating > .form-control {
-        height: 60px;
-        line-height: 1.5;
-    }
-    
-    .form-floating > textarea.form-control {
-        height: 150px;
-    }
-    
-    .card-type-option {
-        padding: 1rem;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-    }
-    
-    .card-type-option:hover {
-        background-color: rgba(0,123,255,0.05);
-        border-color: #007bff;
-    }
-    
-    .form-check-input:checked ~ .form-check-label {
-        font-weight: 600;
-    }
-    
-    .form-check-input:checked + .card-type-option {
-        border-color: #007bff;
-        background-color: rgba(0,123,255,0.1);
-    }
-    
-    /* Call to Action Section */
-    .cta-section {
-        position: relative;
-        background: url('https://images.unsplash.com/photo-1551434678-e076c223a692') center center/cover no-repeat;
-    }
-    
-    .cta-bg-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, rgba(0,123,255,0.9) 0%, rgba(106,17,203,0.9) 100%);
-    }
-    
-    .decorative-element-1 {
-        position: absolute;
-        top: -50px;
-        left: -50px;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, rgba(0,123,255,0.3) 0%, rgba(106,17,203,0.3) 100%);
-        z-index: -1;
-    }
-    
-    .decorative-element-2 {
-        position: absolute;
-        bottom: -100px;
-        right: -100px;
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, rgba(106,17,203,0.3) 0%, rgba(0,123,255,0.3) 100%);
-        z-index: -1;
-    }
-    
-    /* Floating Elements */
-    .floating-element-1 {
-        position: absolute;
-        top: 10%;
-        right: 10%;
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, rgba(0,123,255,0.5) 0%, rgba(106,17,203,0.5) 100%);
-        animation: float 8s ease-in-out infinite;
-    }
-    
-    .floating-element-2 {
-        position: absolute;
-        bottom: 10%;
-        left: 10%;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, rgba(106,17,203,0.5) 0%, rgba(0,123,255,0.5) 100%);
-        animation: float 6s ease-in-out infinite reverse;
-    }
-    
-    .floating-element-3 {
-        position: absolute;
-        top: 40%;
-        right: 30%;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, rgba(0,123,255,0.5) 0%, rgba(106,17,203,0.5) 100%);
-        animation: float 10s ease-in-out infinite;
-    }
-    
-    /* Utility Classes */
-    .py-6 {
-        padding-top: 5rem;
-        padding-bottom: 5rem;
-    }
-    
-    .shadow-hover {
-        transition: all 0.3s ease;
-    }
-    
-    .shadow-hover:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
-    }
-    
-    .text-gradient {
-        background: linear-gradient(to right, #007bff, #6a11cb);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    
-    .btn-glow {
-        position: relative;
-        z-index: 1;
-        overflow: hidden;
-    }
-    
-    .btn-glow::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(45deg, rgba(255,255,255,0), rgba(255,255,255,0.8), rgba(255,255,255,0));
-        transform: rotate(30deg);
-        animation: glow 3s linear infinite;
-        z-index: -1;
-    }
-    
-    @keyframes glow {
-        0% { transform: translate(-50%, -50%) rotate(0deg); }
-        100% { transform: translate(50%, 50%) rotate(360deg); }
-    }
-    
-    @keyframes float {
-        0% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-20px) rotate(5deg); }
-        100% { transform: translateY(0) rotate(0deg); }
-    }
-</style>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize AOS animations
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
+    // Form validation and submission
+    const form = document.querySelector('form');
+    const formControls = document.querySelectorAll('.form-control');
+    
+    // Add Bootstrap validation classes
+    formControls.forEach(control => {
+        control.addEventListener('blur', function() {
+            if (this.value.trim() !== '') {
+                this.classList.add('is-valid');
+            } else if (this.hasAttribute('required')) {
+                this.classList.add('is-invalid');
+            }
         });
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
+    });
+    
+    // Show toast if there's a message
+    {% if messages %}
+        {% for message in messages %}
+            // Assuming there's a toast component in your base template
+            // If not, you may need to add a toast implementation
+            const toastEl = document.createElement('div');
+            toastEl.classList.add('toast', 'show', 'position-fixed', 'top-0', 'end-0', 'm-3');
+            toastEl.setAttribute('role', 'alert');
+            toastEl.setAttribute('aria-live', 'assertive');
+            toastEl.setAttribute('aria-atomic', 'true');
+            
+            toastEl.innerHTML = `
+                <div class="toast-header">
+                    <strong class="me-auto">Success</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ message }}
+                </div>
+            `;
+            
+            document.body.appendChild(toastEl);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                toastEl.remove();
+            }, 5000);
+        {% endfor %}
+    {% endif %}
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70, // Adjust for fixed header
+                    behavior: 'smooth'
+                });
+            }
         });
     });
 </script>
