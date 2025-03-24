@@ -11,19 +11,19 @@
     }
     
     /* Main container styles */
-    .card-container {
+    /* .card-container {
         min-height: 100vh;
         background: linear-gradient(135deg, #000000 0%, #e2e8f0 100%);
         padding: 3rem 1rem;
         display: flex;
         align-items: center;
         justify-content: center;
-    }
+    } */
     
     /* Modern theme styles */
     .modern-theme {
         background: white;
-        border-radius: 16px;
+        border-radius: 8px;
         padding: 2.5rem 2rem;
         box-shadow: 
             0 10px 25px -5px rgba(0, 0, 0, 0.1),
@@ -324,7 +324,7 @@
     
     .btn-secondary-modern {
         background-color: white;
-        color: #1e293b;
+        color: #4f46e5;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         border: 1px solid #e2e8f0;
     }
@@ -576,12 +576,13 @@
         </div> -->
         
         <div class="btn-group">
-            <button onclick="shareCard('{{ card.uuid }}')" class="btn-modern btn-primary-modern">
-                <i class="fas fa-share-alt me-2"></i> Share Card
-            </button>
             <button onclick="saveContact()" class="btn-modern btn-secondary-modern">
                 <i class="fas fa-address-card me-2"></i> Save Contact
             </button>
+            <button onclick="shareCard('{{ card.uuid }}')" class="btn-modern btn-primary-modern">
+                <i class="fas fa-share-alt me-2"></i> Share Card
+            </button>
+        
         </div>
     </div>
     

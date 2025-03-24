@@ -16,7 +16,7 @@
 
     /* Elegant theme styles */
     .elegant-theme {
-        background: linear-gradient(145deg, #ffffff, #f7f7f7);
+        background: linear-gradient(145deg, #f8f7f7, #f7f7f7);
         border-radius: 20px;
         padding: 3rem 2.5rem;
         box-shadow: 
@@ -380,27 +380,27 @@
     }
 
     .btn-primary-elegant {
-        background: #4f46e5;
-        color: white;
+        background: #ffffff;
+        color: #4f46e5;
         box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
     }
 
     .btn-primary-elegant:hover {
-        background: #4338ca;
+        background: #ffffff;
         transform: translateY(-2px);
         box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
     }
 
     .btn-secondary-elegant {
-        background: white;
-        color: #4f46e5;
+        background: #4f46e5;
+        color: #ffffff;
         border: 1px solid #e5e7eb;
     }
 
     .btn-secondary-elegant:hover {
-        background: #f8fafc;
+        background: #4f46e5;
         transform: translateY(-2px);
-        border-color: #4f46e5;
+        border-color: #000000;
     }
 
     /* Responsive design */
@@ -536,12 +536,13 @@
         </div>
 
         <div class="action-buttons">
-            <button onclick="shareCard('{{ card.uuid }}')" class="btn-elegant btn-primary-elegant">
-                <i class="fas fa-share-alt me-2"></i> Share Card
-            </button>
             <button onclick="saveContact()" class="btn-elegant btn-secondary-elegant">
                 <i class="fas fa-address-card me-2"></i> Save Contact
             </button>
+            <button onclick="shareCard('{{ card.uuid }}')" class="btn-elegant btn-primary-elegant">
+                <i class="fas fa-share-alt me-2"></i> Share Card
+            </button>
+            
         </div>
     </div>
 </div>
