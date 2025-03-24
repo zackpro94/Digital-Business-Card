@@ -191,6 +191,89 @@
     .status-dropdown .dropdown-item.rejected .status-indicator {
         background-color: #dc3545;
     }
+    
+    /* Mobile responsive styles */
+    @media (max-width: 991.98px) {
+        .dashboard-wrapper {
+            flex-direction: column;
+        }
+        
+        .dashboard-sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+            top: 0;
+            padding: 1rem;
+        }
+        
+        .dashboard-content {
+            padding: 1.5rem;
+        }
+    }
+    
+    @media (max-width: 767.98px) {
+        .dashboard-content {
+            padding: 1rem;
+        }
+        
+        .table-card td, 
+        .table-card th {
+            padding: 0.75rem 1rem;
+        }
+        
+        .message-preview {
+            max-width: 150px;
+        }
+    }
+    
+    /* Card view for mobile */
+    .contact-request-card {
+        display: none;
+        background: white;
+        border-radius: 16px;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .contact-request-card .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 0;
+        border: none;
+        background: transparent;
+    }
+    
+    .contact-request-card .card-info {
+        margin-bottom: 0.5rem;
+    }
+    
+    .contact-request-card .card-info .info-label {
+        font-size: 0.75rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.25rem;
+    }
+    
+    .contact-request-card .card-info .info-value {
+        margin-bottom: 0.75rem;
+    }
+    
+    @media (max-width: 767.98px) {
+        .table-view {
+            display: none;
+        }
+        
+        .contact-request-card {
+            display: block;
+        }
+    }
 </style>
 {% endblock %}
 
@@ -284,18 +367,20 @@
                             <i class="fas fa-envelope me-2 text-primary"></i>All Contact Requests
                         </h5>
                     </div>
-                    <div class="table-responsive">
+                    
+                    <!-- Table View (Desktop and Tablets) -->
+                    <div class="table-responsive table-view">
                         <table class="table mb-0">
                             <thead>
                                 <tr>
                                     <th>NAME</th>
-                                    <th>EMAIL</th>
-                                    <th>PHONE</th>
-                                    <th>COMPANY</th>
-                                    <th>MESSAGE</th>
+                                    <th class="d-none d-md-table-cell">EMAIL</th>
+                                    <th class="d-none d-lg-table-cell">PHONE</th>
+                                    <th class="d-none d-lg-table-cell">COMPANY</th>
+                                    <th class="d-none d-md-table-cell">MESSAGE</th>
                                     <th>CARD TYPE</th>
                                     <th>STATUS</th>
-                                    <th>DATE</th>
+                                    <th class="d-none d-md-table-cell">DATE</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -312,12 +397,12 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="d-none d-md-table-cell">
                                             <a href="mailto:{{ request.email }}" class="text-decoration-none">
                                                 {{ request.email }}
                                             </a>
                                         </td>
-                                        <td>
+                                        <td class="d-none d-lg-table-cell">
                                             {% if request.phone %}
                                                 <a href="tel:{{ request.phone }}" class="text-decoration-none">
                                                     {{ request.phone }}
@@ -326,14 +411,14 @@
                                                 <span class="text-muted">Not provided</span>
                                             {% endif %}
                                         </td>
-                                        <td>
+                                        <td class="d-none d-lg-table-cell">
                                             {% if request.company_name %}
                                                 {{ request.company_name }}
                                             {% else %}
                                                 <span class="text-muted">Not provided</span>
                                             {% endif %}
                                         </td>
-                                        <td>
+                                        <td class="d-none d-md-table-cell">
                                             <div class="message-preview" title="{{ request.message }}">
                                                 {{ request.message }}
                                             </div>
@@ -398,7 +483,7 @@
                                                 </ul>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="d-none d-md-table-cell">
                                             <span class="text-muted">{{ request.created_at|date:"M d, Y" }}</span>
                                         </td>
                                     </tr>
@@ -416,6 +501,127 @@
                                 {% endif %}
                             </tbody>
                         </table>
+                    </div>
+                    
+                    <!-- Card View (Mobile) -->
+                    <div class="px-3 pb-3">
+                        {% if contact_requests %}
+                            {% for request in contact_requests %}
+                            <div class="contact-request-card">
+                                <div class="card-header">
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-sm me-3 bg-primary-soft rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-user text-primary"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">{{ request.name }}</h6>
+                                            <small class="text-muted">{{ request.created_at|date:"M d, Y" }}</small>
+                                        </div>
+                                    </div>
+                                    <span class="badge {% if request.card_type == 'individual' %}badge-soft-info{% else %}badge-soft-primary{% endif %}">
+                                        {{ request.get_card_type_display }}
+                                    </span>
+                                </div>
+                                
+                                <div class="card-info">
+                                    <div class="info-label">Email</div>
+                                    <div class="info-value">
+                                        <a href="mailto:{{ request.email }}" class="text-decoration-none">
+                                            {{ request.email }}
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                {% if request.phone %}
+                                <div class="card-info">
+                                    <div class="info-label">Phone</div>
+                                    <div class="info-value">
+                                        <a href="tel:{{ request.phone }}" class="text-decoration-none">
+                                            {{ request.phone }}
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                                {% if request.company_name %}
+                                <div class="card-info">
+                                    <div class="info-label">Company</div>
+                                    <div class="info-value">{{ request.company_name }}</div>
+                                </div>
+                                {% endif %}
+                                
+                                <div class="card-info">
+                                    <div class="info-label">Message</div>
+                                    <div class="info-value">{{ request.message }}</div>
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <div class="info-label">Status</div>
+                                    <div class="dropdown status-dropdown">
+                                        <button class="btn btn-sm dropdown-toggle 
+                                            {% if request.status == 'pending' %}
+                                                btn-outline-warning
+                                            {% elif request.status == 'in_progress' %}
+                                                btn-outline-info
+                                            {% elif request.status == 'completed' %}
+                                                btn-outline-success
+                                            {% elif request.status == 'rejected' %}
+                                                btn-outline-danger
+                                            {% endif %} w-100"
+                                            type="button" id="statusDropdownMobile{{ request.id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ request.get_status_display }}
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="statusDropdownMobile{{ request.id }}">
+                                            <li>
+                                                <form method="post" action="{% url 'contact_request_update_status' request.id %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="status" value="pending">
+                                                    <button type="submit" class="dropdown-item pending">
+                                                        <span class="status-indicator"></span> Pending
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form method="post" action="{% url 'contact_request_update_status' request.id %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="status" value="in_progress">
+                                                    <button type="submit" class="dropdown-item in-progress">
+                                                        <span class="status-indicator"></span> In Progress
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form method="post" action="{% url 'contact_request_update_status' request.id %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="status" value="completed">
+                                                    <button type="submit" class="dropdown-item completed">
+                                                        <span class="status-indicator"></span> Completed
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form method="post" action="{% url 'contact_request_update_status' request.id %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="status" value="rejected">
+                                                    <button type="submit" class="dropdown-item rejected">
+                                                        <span class="status-indicator"></span> Rejected
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="contact-request-card text-center py-5">
+                                <div class="py-4">
+                                    <i class="fas fa-envelope fa-3x text-muted mb-3"></i>
+                                    <p class="mb-0">No contact requests available</p>
+                                    <p class="text-muted">Contact requests from your website will appear here</p>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
