@@ -80,8 +80,8 @@ WSGI_APPLICATION = 'digital_business_card.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('postgresql://postgres:FkugdCjtSjSgtSOyUgTdyLLtSWyHQqof@postgres.railway.internal:5432/railway'),  # Use DATABASE_URL from environment variables
-        conn_max_age=600,  # Optional: Improve performance with persistent connections
+        default=os.getenv('postgresql://postgres:FkugdCjtSjSgtSOyUgTdyLLtSWyHQqof@postgres.railway.internal:5432/railway', 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')),
+        conn_max_age=600,
     )
 }
 
