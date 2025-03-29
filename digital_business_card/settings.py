@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-s1w55#8ama35^5_98a4z3yf*#b+g2sacg@ok)h4%za*=g2621o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =True
 
-ALLOWED_HOSTS = ['digital-business-card-production.up.railway.app', 'localhost:8000', '127.0.0.1']
+ALLOWED_HOSTS = ['dbc.up.railway.app', 'localhost:8000', '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS= ['https://digital-business-card-production.up.railway.app']
 
