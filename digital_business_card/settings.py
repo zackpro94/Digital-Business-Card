@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'digital_business_card.wsgi.application'
 # settings.py
 import dj_database_url
 
-DATABASE_URL = os.getenv('postgresql://postgres:vzsVRGhxDYCYDvtGbKsHyxBGnljscban@postgres.railway.internal:5432/railway')
+DATABASE_URL = os.getenv('postgresql://postgres:vzsVRGhxDYCYDvtGbKsHyxBGnljscban@postgres.railway.internal:5432/railway', 'sqlite:///db.sqlite3')
 
 DATABASES = {
     'default': dj_database_url.config(
