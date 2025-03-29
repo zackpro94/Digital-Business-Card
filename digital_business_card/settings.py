@@ -29,7 +29,7 @@ DEBUG =True
 
 ALLOWED_HOSTS = ['dbc.up.railway.app', 'localhost:8000', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS= ['https://digital-business-card-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS= ['https://dbc.up.railway.app']
 
 # Application definition
 
