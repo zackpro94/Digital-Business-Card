@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-s1w55#8ama35^5_98a4z3yf*#b+g2sacg@ok)h4%za*=g2621o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =True
+DEBUG =False
 
 ALLOWED_HOSTS = ['dbc.up.railway.app', 'localhost:8000', '127.0.0.1', '*']
 
@@ -78,13 +78,31 @@ WSGI_APPLICATION = 'digital_business_card.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('postgresql://postgres:vzsVRGhxDYCYDvtGbKsHyxBGnljscban@postgres.railway.internal:5432/railway', 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')),
-        conn_max_age=600,
-        ssl_require=False
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv('postgresql://postgres:vzsVRGhxDYCYDvtGbKsHyxBGnljscban@postgres.railway.internal:5432/railway', 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')),
+#         conn_max_age=600,
+#         ssl_require=True
+#     )
+# }
+
+DATABASE_URL = os.getenv('postgresql://postgres:vzsVRGhxDYCYDvtGbKsHyxBGnljscban@postgres.railway.internal:5432/railway', 'sqlite:///' + str(Path(__file__).resolve().parent.parent / 'db.sqlite3'))
+
+if DATABASE_URL.startswith('postgres'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True  # SSL only for PostgreSQL
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': Path(__file__).resolve().parent.parent / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
